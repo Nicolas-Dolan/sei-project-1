@@ -1,4 +1,14 @@
 
-This produces a diagonal line:
+This produces a diagonal line of walls:
 if (i % (width - 1) === 0) {
-      wallIndices.push(i)}
+      wallIndices.push(i)
+}
+
+
+This produces a vertical line of walls
+function drawVerticalWalls(min, max) {
+    let i = min
+    for (i = min; i <= max; i += width) {
+      wallIndices.push(i)
+    }
+  }

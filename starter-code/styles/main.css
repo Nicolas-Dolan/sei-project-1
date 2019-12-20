@@ -38,3 +38,13 @@ div.grid-item.wall {
   background-color: grey;
   color: white;
 }
+
+div.grid-item.bigCoin {
+  background-color: gold;
+  color: black;
+}
+
+div.grid-item.smallCoin {
+  background-color: red;
+  color: white;
+}
