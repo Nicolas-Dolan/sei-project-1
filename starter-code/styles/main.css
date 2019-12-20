@@ -36,4 +36,5 @@ div.grid-item.player {
 
 div.grid-item.wall {
   background-color: grey;
+  color: white;
 }
