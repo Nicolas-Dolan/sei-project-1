@@ -40,11 +40,15 @@ div.grid-item.wall {
 }
 
 div.grid-item.bigCoin {
-  background-color: gold;
-  color: black;
+  background-image: url('../assets/coin.png');
+  background-repeat: no-repeat;
+  background-size: 150%;
+  background-position: center;
 }
 
 div.grid-item.smallCoin {
-  background-color: red;
-  color: white;
+  background-image: url('../assets/coin.png');
+  background-repeat: no-repeat;
+  background-size: 70%;
+  background-position: center;
 }

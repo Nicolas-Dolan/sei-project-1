@@ -1,14 +1,19 @@
 function init() {
 
   // GAME VARIABLES
+
   let playerIndex = 19
+  let score = 0
 
   //  DOM VARIABLES
+
   const width = 18
   const grid = document.querySelector('.grid')
+  const gridItems = document.querySelectorAll('.grid-item')
   const squares = []
   const wallIndices = []
   const bigCoinsIndices = [34, 107, 88]
+  // console.log(squares)
   
 
   //FUNCTIONS
@@ -30,21 +35,25 @@ function init() {
       case 39:
         if (playerIndex % width < width - 1 && !squares[playerIndex + 1].classList.contains('wall')) {
           playerIndex++
+          playerMoved()
         }
         break
       case 37:
         if (playerIndex % width > 0 && !squares[playerIndex - 1].classList.contains('wall')) {
           playerIndex--
+          playerMoved()
         }
         break
       case 40:
         if (playerIndex + width < width * width && !squares[playerIndex + width].classList.contains('wall')) {
-          playerIndex += width 
+          playerIndex += width
+          playerMoved()
         }
         break
       case 38:
         if (playerIndex - width >= 0 && !squares[playerIndex - width].classList.contains('wall')) {
           playerIndex -= width
+          playerMoved()
         } 
         break
       default:
@@ -53,7 +62,10 @@ function init() {
     squares.forEach(square => square.classList.remove('player'))
     squares[playerIndex].classList.add('player')
     console.log('current player index is' , playerIndex)
+    console.log('score', score)
   }
+
+  // The below functions all create the features on the board
 
   function addPerimeterWalls() {
     let i = 0
@@ -106,14 +118,7 @@ function init() {
   drawBlock(227, 263)
   drawBlock(259, 262)
 
-  // function placeBigCoins() {
-
-  // }
-
-  // function placeSmallCoins
-
-
-  console.log('wallIndices', wallIndices)
+  // console.log('wallIndices', wallIndices)
 
   // adds walls to grid
   wallIndices.forEach((element) => squares[element].classList.add('wall'))
@@ -126,19 +131,44 @@ function init() {
   })
 
   //adds small coins to grid
-  // function addSmallCoins() {
-  //   squares.forEach((element) => {
-  //     if (!squares[element].classList.contains('wall') && !squares[element].classList.contains('player') && !squares[element].classList.contains('bigCoin')) {
-  //       squares[element].classList.add('smallCoin')
-  //     }
-  //   }) 
-  // }
-  // addSmallCoins()
-
-  
+  function addSmallCoins() {
+    squares.forEach((element, index) => {
+      if (!squares[index].classList.contains('wall') && !squares[index].classList.contains('player') && !squares[index].classList.contains('bigCoin')) {
+        squares[index].classList.add('smallCoin')
+      }
+    }) 
+  }
+  addSmallCoins()
 
   // adds index number to each grid item
   squares.forEach((element, index) => element.innerHTML = index)
+
+  //the below functions contribute towards the game mechanics
+
+  function gainPoints(amount) {
+    score += amount
+  }
+
+  function eatSmallCoin() {
+    if (squares[playerIndex].classList.contains('smallCoin')) {
+      squares[playerIndex].classList.remove('smallCoin')
+      gainPoints(10)
+    }
+  }
+
+  function eatBigCoin() {
+    if (squares[playerIndex].classList.contains('bigCoin')) {
+      squares[playerIndex].classList.remove('bigCoin')
+      gainPoints(50)
+    }
+  }
+
+  function playerMoved() {
+    eatSmallCoin()
+    eatBigCoin()
+  }
+
+
 
   // EVENT HANDLERS
   window.addEventListener('keydown', handleKeyDown)
