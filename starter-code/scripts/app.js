@@ -12,8 +12,9 @@ function init() {
   const gridItems = document.querySelectorAll('.grid-item')
   const squares = []
   const wallIndices = []
-  const bigCoinsIndices = [34, 107, 88]
-  // console.log(squares)
+  const bigCoinsIndices = [34, 88, 160]
+  const scoreViewer = document.querySelector('.score')
+  console.log(scoreViewer)
   
 
   //FUNCTIONS
@@ -33,13 +34,19 @@ function init() {
   function handleKeyDown(e) {
     switch (e.keyCode) {
       case 39:
-        if (playerIndex % width < width - 1 && !squares[playerIndex + 1].classList.contains('wall')) {
+        if (playerIndex === 161) {
+          playerIndex = 144
+          playerMoved()
+        } else if (playerIndex % width < width - 1 && !squares[playerIndex + 1].classList.contains('wall')) {
           playerIndex++
           playerMoved()
         }
         break
       case 37:
-        if (playerIndex % width > 0 && !squares[playerIndex - 1].classList.contains('wall')) {
+        if (playerIndex === 144) {
+          playerIndex = 161
+          playerMoved()
+        } else if (playerIndex % width > 0 && !squares[playerIndex - 1].classList.contains('wall')) {
           playerIndex--
           playerMoved()
         }
@@ -61,8 +68,8 @@ function init() {
     }
     squares.forEach(square => square.classList.remove('player'))
     squares[playerIndex].classList.add('player')
-    console.log('current player index is' , playerIndex)
-    console.log('score', score)
+    // console.log('current player index is' , playerIndex)
+    // console.log('score', score)
   }
 
   // The below functions all create the features on the board
@@ -117,6 +124,12 @@ function init() {
   drawBlock(222, 258)
   drawBlock(227, 263)
   drawBlock(259, 262)
+  // wallIndices.remove(144)
+  wallIndices.forEach((element, index, array) => {
+    if (element === 144 || element === 161) {
+      array.splice(index, 2)
+    }
+  })
 
   // console.log('wallIndices', wallIndices)
 
@@ -147,6 +160,7 @@ function init() {
 
   function gainPoints(amount) {
     score += amount
+    scoreViewer.innerHTML = score
   }
 
   function eatSmallCoin() {
@@ -166,8 +180,26 @@ function init() {
   function playerMoved() {
     eatSmallCoin()
     eatBigCoin()
+    checkCoins()
+    // console.log('number of coins remaining', checkCoins())
   }
 
+  function checkCoins() {
+    let counter = 0
+    squares.map((element) => {
+      if (element.classList.contains('smallCoin') || element.classList.contains('bigCoin')) {
+        counter++
+        // console.log('element', element, 'total', counter)
+      }
+      return counter
+    })
+    if (counter < 1) {
+      console.log('start next round')
+    }
+    // console.log('number of coins remaining', checkCoins())
+  }
+
+  
 
 
   // EVENT HANDLERS
