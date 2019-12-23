@@ -23,11 +23,14 @@ function init() {
     // const gridItems = document.querySelectorAll('.grid-item')
     const squares = []
     const wallIndices = []
-    let bigCoinsIndices = [78, 80, 82]
+    let bigCoinsIndices = [21, 78, 80, 82]
     const scoreViewer = document.querySelector('.score')
     const roundViewer = document.querySelector('.round')
     const resetBtn = document.querySelector('.reset')
-    // console.log(scoreViewer)
+    const endGameBtn = document.querySelector('.endGame')
+    const gameOverScrn = document.querySelector('.gameOverScrn')
+    const playAgainBtn = document.querySelector('.playAgain')
+    console.log(scoreViewer)
   
 
     //FUNCTIONS
@@ -245,10 +248,28 @@ function init() {
 
     }
 
+    function gameOver() {
+      game.style.display = 'none'
+      gameOverScrn.style.display = 'flex'
+      const scoreViewer2 = document.querySelector('body > div.gameOverScrn > p > span')
+      scoreViewer2.innerHTML = score
+      gameActive = false
+    }
+
+    function playAgain() {
+      gameOverScrn.style.display = 'none'
+      game.style.display = 'flex'
+      reset()
+      gameActive = true
+    }
+
 
     // EVENT HANDLERS
     window.addEventListener('keydown', handleKeyDown)
     resetBtn.addEventListener('click', reset)
+    endGameBtn.addEventListener('click', gameOver)
+    playAgainBtn.addEventListener('click', playAgain)
+
   }
 
   
