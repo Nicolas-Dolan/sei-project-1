@@ -1,24 +1,30 @@
 function init() {
 
+
+
   // GAME VARIABLES
 
   let playerIndex = 19
   let score = 0
+  let round = 1
 
   //  DOM VARIABLES
 
   const width = 18
   const grid = document.querySelector('.grid')
-  const gridItems = document.querySelectorAll('.grid-item')
+  // const gridItems = document.querySelectorAll('.grid-item')
   const squares = []
   const wallIndices = []
-  const bigCoinsIndices = [34, 88, 160]
+  let bigCoinsIndices = [78, 80, 82]
   const scoreViewer = document.querySelector('.score')
-  console.log(scoreViewer)
+  const roundViewer = document.querySelector('.round')
+  // console.log(scoreViewer)
   
 
   //FUNCTIONS
 
+  scoreViewer.innerHTML = score
+  roundViewer.innerHTML = round
 
   // loop as many times as width times the width to fill the grid
   Array(width * width).join('.').split('.').forEach(() => {
@@ -137,11 +143,15 @@ function init() {
   wallIndices.forEach((element) => squares[element].classList.add('wall'))
 
   //adds big coins to grid
-  bigCoinsIndices.forEach((element) => {
-    if (!squares[element].classList.contains('wall')) {
-      squares[element].classList.add('bigCoin')
-    }
-  })
+  function addBigCoins() {
+    bigCoinsIndices.forEach((element) => {
+      if (!squares[element].classList.contains('wall')) {
+        squares[element].classList.add('bigCoin')
+      }
+    })
+  }
+  addBigCoins()
+  
 
   //adds small coins to grid
   function addSmallCoins() {
@@ -151,7 +161,7 @@ function init() {
       }
     }) 
   }
-  addSmallCoins()
+  // addSmallCoins()
 
   // adds index number to each grid item
   squares.forEach((element, index) => element.innerHTML = index)
@@ -194,12 +204,24 @@ function init() {
       return counter
     })
     if (counter < 1) {
+      nextRound()
       console.log('start next round')
     }
     // console.log('number of coins remaining', checkCoins())
   }
 
-  
+  function nextRound() {
+    squares[playerIndex].classList.remove('player')
+    playerIndex = 19
+    squares[playerIndex].classList.add('player')
+    bigCoinsIndices = [84, 86]
+    addBigCoins()
+    addSmallCoins()
+    round++
+    roundViewer.innerHTML = round
+    console.log('round', round)
+
+  }
 
 
   // EVENT HANDLERS
