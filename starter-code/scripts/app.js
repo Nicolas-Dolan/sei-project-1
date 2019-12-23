@@ -30,6 +30,10 @@ function init() {
     const endGameBtn = document.querySelector('.endGame')
     const gameOverScrn = document.querySelector('.gameOverScrn')
     const playAgainBtn = document.querySelector('.playAgain')
+    const form = document.querySelector('#username')
+    const textInput = document.querySelector('#textInput')
+    const myStorage = window.localStorage
+    const scores = document.querySelector('.scores')
     console.log(scoreViewer)
   
 
@@ -263,12 +267,46 @@ function init() {
       gameActive = true
     }
 
+    function usernameInput() {
+      const username = textInput.value
+      localStorage.setItem(username, score)
+      console.log('Username', username, 'Score', score)
+      console.log('Storage', myStorage)
+      generateLeaderBd()
+    }
+
+    function generateLeaderBd() {
+      const leaderboard = Object.entries(myStorage).map((element) => {
+        return element = [element[0], parseInt(element[1])]
+      }).sort((a,b) => b[1] - (a[1]))
+      console.log('leaderboard', leaderboard)
+      scores.innerHTML = leaderboard
+
+
+
+      // const leaderboard = Object.entries(myStorage)
+      // console.log('leaderboard', leaderboard)
+      // const numbers = leaderboard.map((element) => {
+      //   return element = [element[0], parseInt(element[1])]
+      // })
+      // console.log('numbers', numbers)
+      // const sortedNumbers = numbers.sort((a,b) => b[1] - (a[1]))
+      // console.log('sorted numbers', sortedNumbers)
+    }
+    generateLeaderBd()
+
+
 
     // EVENT HANDLERS
     window.addEventListener('keydown', handleKeyDown)
     resetBtn.addEventListener('click', reset)
     endGameBtn.addEventListener('click', gameOver)
     playAgainBtn.addEventListener('click', playAgain)
+    form.addEventListener('submit', e => {
+      e.preventDefault()
+      usernameInput()
+      console.log('form submitted')
+    })
 
   }
 
