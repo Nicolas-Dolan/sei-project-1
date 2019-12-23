@@ -52,3 +52,16 @@ div.grid-item.smallCoin {
   background-size: 70%;
   background-position: center;
 }
+
+div.startScrn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+div.game {
+  display: none;
+  justify-content: space-between;
+}
+
