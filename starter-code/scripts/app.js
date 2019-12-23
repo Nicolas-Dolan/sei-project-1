@@ -34,7 +34,7 @@ function init() {
     const textInput = document.querySelector('#textInput')
     const myStorage = window.localStorage
     const scores = document.querySelector('.scores')
-    console.log(scoreViewer)
+    // console.log(scoreViewer)
   
 
     //FUNCTIONS
@@ -258,6 +258,7 @@ function init() {
       const scoreViewer2 = document.querySelector('body > div.gameOverScrn > p > span')
       scoreViewer2.innerHTML = score
       gameActive = false
+      generateLeaderBd()
     }
 
     function playAgain() {
@@ -280,20 +281,19 @@ function init() {
         return element = [element[0], parseInt(element[1])]
       }).sort((a,b) => b[1] - (a[1]))
       console.log('leaderboard', leaderboard)
-      scores.innerHTML = leaderboard
-
-
-
-      // const leaderboard = Object.entries(myStorage)
-      // console.log('leaderboard', leaderboard)
-      // const numbers = leaderboard.map((element) => {
-      //   return element = [element[0], parseInt(element[1])]
-      // })
-      // console.log('numbers', numbers)
-      // const sortedNumbers = numbers.sort((a,b) => b[1] - (a[1]))
-      // console.log('sorted numbers', sortedNumbers)
+      console.log('name', leaderboard[0][0], 'score', leaderboard[0][1])
+      document.querySelector('.scores1 .name').innerHTML = leaderboard[0][0]
+      document.querySelector('.scores1 .userScore').innerHTML = leaderboard[0][1]
+      document.querySelector('.scores2 .name').innerHTML = leaderboard[1][0]
+      document.querySelector('.scores2 .userScore').innerHTML = leaderboard[1][1]
+      document.querySelector('.scores3 .name').innerHTML = leaderboard[2][0]
+      document.querySelector('.scores3 .userScore').innerHTML = leaderboard[2][1]
+      document.querySelector('.scores4 .name').innerHTML = leaderboard[3][0]
+      document.querySelector('.scores4 .userScore').innerHTML = leaderboard[3][1]
+      document.querySelector('.scores5 .name').innerHTML = leaderboard[4][0]
+      document.querySelector('.scores5 .userScore').innerHTML = leaderboard[4][1]
     }
-    generateLeaderBd()
+    
 
 
 

@@ -70,3 +70,12 @@ div.gameOverScrn {
   flex-direction: column;
 }
 
+div.scoreboard {
+  display: flex;
+  flex-direction: column;
+}
+
+div.scores1, div.scores2, div.scores3, div.scores4, div.scores5 {
+  display: flex;
+  justify-content: space-between;
+}
