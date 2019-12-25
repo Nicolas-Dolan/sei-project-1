@@ -79,3 +79,10 @@ div.scores1, div.scores2, div.scores3, div.scores4, div.scores5 {
   display: flex;
   justify-content: space-between;
 }
+
+div.grid-item.ghost1 {
+  background-image: url('../assets/ghost1.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+}
