@@ -102,3 +102,41 @@ function chooseMove() {
         squares[ghostIndex[0]].classList.add('ghostAny')
         ghostMoved()
       }
+
+Original player movement controls
+squares[playerIndex].classList.add('player')
+    function handleKeyDown(e) {
+      switch (e.keyCode) {
+        case 39:
+          if (playerIndex === 161) {
+            playerIndex = 144
+          } else if (playerIndex % width < width - 1 && !squares[playerIndex + 1].classList.contains('wall')) {
+            playerIndex++
+          }
+          break
+        case 37:
+          if (playerIndex === 144) {
+            playerIndex = 161
+          } else if (playerIndex % width > 0 && !squares[playerIndex - 1].classList.contains('wall')) {
+            playerIndex--
+          }
+          break
+        case 40:
+          if (playerIndex + width < width * width && !squares[playerIndex + width].classList.contains('wall')) {
+            playerIndex += width
+          }
+          break
+        case 38:
+          if (playerIndex - width >= 0 && !squares[playerIndex - width].classList.contains('wall')) {
+            playerIndex -= width
+          } 
+          break
+        default:
+          console.log('player shouldnt move')
+      }
+      squares.forEach(square => square.classList.remove('player'))
+      squares[playerIndex].classList.add('player')
+      playerMoved()
+    // console.log('current player index is' , playerIndex)
+    // console.log('score', score)
+    }

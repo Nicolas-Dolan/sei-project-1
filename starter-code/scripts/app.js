@@ -20,6 +20,7 @@ function init() {
     let ghost4Index = [118]
     let timerId = ''
     const timerIdArray = []
+    let moveable = true
 
     gameActive = true
     console.log('Game active?', gameActive)
@@ -62,32 +63,46 @@ function init() {
       grid.appendChild(square)
     })
 
+    
+
     // places player at the starting position when grid has finished building
     squares[playerIndex].classList.add('player')
+
     function handleKeyDown(e) {
+      const delay = 200
+      function moveTimer() {
+        moveable = false
+        setTimeout(function() { moveable = true }, delay)
+      }
       switch (e.keyCode) {
         case 39:
-          if (playerIndex === 161) {
+          if (moveable && playerIndex === 161) {
             playerIndex = 144
-          } else if (playerIndex % width < width - 1 && !squares[playerIndex + 1].classList.contains('wall')) {
+            moveTimer()
+          } else if (moveable && playerIndex % width < width - 1 && !squares[playerIndex + 1].classList.contains('wall')) {
             playerIndex++
+            moveTimer()
           }
           break
         case 37:
-          if (playerIndex === 144) {
+          if (moveable && playerIndex === 144) {
             playerIndex = 161
-          } else if (playerIndex % width > 0 && !squares[playerIndex - 1].classList.contains('wall')) {
+            moveTimer()
+          } else if (moveable && playerIndex % width > 0 && !squares[playerIndex - 1].classList.contains('wall')) {
             playerIndex--
+            moveTimer()
           }
           break
         case 40:
-          if (playerIndex + width < width * width && !squares[playerIndex + width].classList.contains('wall')) {
+          if (moveable && playerIndex + width < width * width && !squares[playerIndex + width].classList.contains('wall')) {
             playerIndex += width
+            moveTimer()
           }
           break
         case 38:
-          if (playerIndex - width >= 0 && !squares[playerIndex - width].classList.contains('wall')) {
+          if (moveable && playerIndex - width >= 0 && !squares[playerIndex - width].classList.contains('wall')) {
             playerIndex -= width
+            moveTimer()
           } 
           break
         default:
@@ -376,7 +391,7 @@ function init() {
           break
       }
       
-      timerId = setInterval(chooseMove, 1000)
+      timerId = setInterval(chooseMove, 500)
 
       timerIdArray.push(timerId)
 
