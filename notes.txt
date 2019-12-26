@@ -12,3 +12,93 @@ function drawVerticalWalls(min, max) {
       wallIndices.push(i)
     }
   }
+
+The old algorithm for pathfinding (it had a tendency to lock the ghost in an infinite loop)
+function chooseMove() {
+        if (lastDirection === 'right') {
+          moveRight()
+          if (wayClear === false) {
+            const random = Math.floor(Math.random() * (2 - 1 + 1)) + 1
+            if (random === 1) {
+              moveUp()
+              if (wayClear === false) {
+                moveDown()
+              }
+            } else if (random === 2) {
+              moveDown()
+              if (wayClear === false) {
+                moveUp()
+              }
+            }
+          }
+          if (wayClear === false) {
+            moveLeft()
+          }
+        } else if (lastDirection === 'left') {
+          moveLeft()
+          if (wayClear === false) {
+            const random = Math.floor(Math.random() * (2 - 1 + 1)) + 1
+            if (random === 1) {
+              moveUp()
+              if (wayClear === false) {
+                moveDown()
+              }
+            } else if (random === 2) {
+              moveDown()
+              if (wayClear === false) {
+                moveUp()
+              }
+            }
+          }
+          if (wayClear === false) {
+            moveRight()
+          }
+        } else if (lastDirection === 'up') {
+          moveUp()
+          if (wayClear === false) {
+            const random = Math.floor(Math.random() * (2 - 1 + 1)) + 1
+            if (random === 1) {
+              moveLeft()
+              if (wayClear === false) {
+                moveRight()
+              }
+            } else if (random === 2) {
+              moveRight()
+              if (wayClear === false) {
+                moveLeft()
+              }
+            }
+          }
+          if (wayClear === false) {
+            moveDown()
+          }
+        } else if (lastDirection === 'down') {
+          moveDown()
+          if (wayClear === false) {
+            const random = Math.floor(Math.random() * (2 - 1 + 1)) + 1
+            if (random === 1) {
+              moveLeft()
+              if (wayClear === false) {
+                moveRight()
+              }
+            } else if (random === 2) {
+              moveRight()
+              if (wayClear === false) {
+                moveLeft()
+              }
+            }
+          }
+          if (wayClear === false) {
+            moveUp()
+          }
+        }
+        squares.forEach((square) => {
+          if (square.classList.contains(ghost) && square.classList.contains('ghostAny')) {
+            square.classList.remove('ghostAny')
+          }
+        })
+        squares.forEach(square => square.classList.remove(ghost))
+        squares[ghostIndex[0]].classList.add(ghost)
+        squares[ghostIndex[0]].classList.add('ghostAny')
+        ghostMoved()
+      }

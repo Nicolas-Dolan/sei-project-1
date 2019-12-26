@@ -86,3 +86,24 @@ div.grid-item.ghost1 {
   background-size: 100%;
   background-position: center;
 }
+
+div.grid-item.ghost2 {
+  background-image: url('../assets/ghost2.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+}
+
+div.grid-item.ghost3 {
+  background-image: url('../assets/ghost3.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+}
+
+div.grid-item.ghost4 {
+  background-image: url('../assets/ghost4.ico');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+}
