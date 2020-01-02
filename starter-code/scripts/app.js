@@ -18,7 +18,10 @@ function init() {
     let ghost2Index = [116]
     let ghost3Index = [117]
     let ghost4Index = [118]
-    const pathfinder1Index = [304]
+    let pathfinder1Index = [117]
+    let pathfinder2Index = [25]
+    let pathfinder3Index = [304]
+    let pathfinder4Index = [304]
     let timerId = ''
     const timerIdArray = []
     let moveable = true
@@ -376,8 +379,10 @@ function init() {
     function ghostMoveAll() {
       ghostMove(ghost1Index, 'ghost1')
       ghostMove(ghost2Index, 'ghost2')
-      ghostMove(ghost3Index, 'ghost3')
+      // ghostMove(ghost3Index, 'ghost3')
       ghostMove(ghost4Index, 'ghost4')
+
+      chasePlayer(ghost3Index, 'ghost3', pathfinder1Index, playerIndex)
     }
     
   
@@ -787,52 +792,47 @@ function init() {
     let lmPlusMc = []
     let shortest = ['default', 100]
 
-    findShortestPath(pathfinder1Index, playerIndex)
+    
 
+    function chasePlayer(ghostIndex, ghost, pathfinderIndex, destinationIndex) {
 
-    function findShortestPath(pathfinderIndex, destinationIndex) {
+      timerId = setInterval(pursuePlayer, 500)
 
-      let i = 0
-      for (i = 0; i < 60; i++) {
-        pathfinderIndex = [304]
+      timerIdArray.push(timerId)
+
+      function pursuePlayer() {
+        shortestPath = ['reset', 100]
+        pathfinderIndex[0] = ghostIndex[0]
+        destinationIndex = playerIndex
         lmPlusMc = []
-        pathfinderMove(pathfinderIndex, destinationIndex)
-        // if (shortestPath[0][1] < shortestPath[1][1]) {
-        //   shortestPath.pop()
-        // } else shortestPath.shift()
-      }
-      console.log('shortest path array =', shortestPath)
-      // let shortest = ['default', 100]
-      shortestPath.map((element, index) => {
-        if (element[1] < shortest[1]) {
-          shortest = element
+        shortest = ['reset', 100]
+        // shortest = []
+        // destinationIndex = playerIndex
+        findShortestPath(pathfinderIndex, destinationIndex, ghostIndex)
+        if (shortest[0] === 'right') {
+          moveRightC()
+        } else if (shortest[0] === 'left') {
+          moveLeftC()
+        } else if (shortest[0] === 'up') {
+          moveUpC()
+        } else if (shortest[0] === 'down') {
+          moveDownC()
         }
-      })
-      console.log('shortest path =', shortest)
-      return shortest
-    }
-
-    function chasePlayer(ghostIndex, ghost, destinationIndex) {
-      destinationIndex = playerIndex
-      findShortestPath(ghostIndex, destinationIndex)
-      if (shortest[0] === 'right') {
-        moveRightC()
-      } else if (shortest[0] === 'left') {
-        moveLeftC()
-      } else if (shortest[0] === 'up') {
-        moveUpC()
-      } else if (shortest[0] === 'down') {
-        moveDownC()
+        squares.forEach((square) => {
+          if (square.classList.contains(ghost) && square.classList.contains('ghostAny')) {
+            square.classList.remove('ghostAny')
+          }
+        })
+        squares.forEach(square => square.classList.remove(ghost))
+        squares[ghostIndex[0]].classList.add(ghost)
+        squares[ghostIndex[0]].classList.add('ghostAny')
+        ghostMoved()
+        pathfinderIndex[0] = ghostIndex[0]
+        console.log('ghostindex =', ghostIndex)
+        console.log('pathfinderIndex', pathfinderIndex)
+        console.log('playerindex =', playerIndex)
       }
-      squares.forEach((square) => {
-        if (square.classList.contains(ghost) && square.classList.contains('ghostAny')) {
-          square.classList.remove('ghostAny')
-        }
-      })
-      squares.forEach(square => square.classList.remove(ghost))
-      squares[ghostIndex[0]].classList.add(ghost)
-      squares[ghostIndex[0]].classList.add('ghostAny')
-      ghostMoved()
+      
 
       function moveRightC() {
         if (ghostIndex[0] === 161 && !squares[144].classList.contains('ghostAny')) {
@@ -865,19 +865,48 @@ function init() {
         if (ghostIndex[0] - width >= 0 && !squares[ghostIndex[0] - width].classList.contains('wall') && !squares[ghostIndex[0] - width].classList.contains('ghostAny')) {
           ghostIndex[0] -= width
           ghostMoved()
+        }
       }
     }
-  }
     
-    
-    
+    // findShortestPath(pathfinder1Index, playerIndex, ghost3Index)
 
 
-    function pathfinderMove(pathfinderIndex, destinationIndex) {
+    function findShortestPath(pathfinderIndex, destinationIndex, ghostIndex) {
+      // shortest = []
+      let i = 0
+      for (i = 0; i < 60; i++) {
+        pathfinderIndex[0] = ghostIndex[0]
+        destinationIndex = playerIndex
+        // console.log('ghostindex =', ghostIndex)
+        lmPlusMc = []
+        pathfinderMove(pathfinderIndex, destinationIndex, ghostIndex)
+        pathfinderIndex[0] = ghostIndex[0]
+        // pathfinderIndex[0] = ghostIndex[0]
+        // if (shortestPath[0][1] < shortestPath[1][1]) {
+        //   shortestPath.pop()
+        // } else shortestPath.shift()
+      }
+      // console.log('shortest path array =', shortestPath)
+      // let shortest = ['default', 100]
+      shortestPath.map((element) => {
+        if (element[1] < shortest[1]) {
+          shortest = element
+        }
+      })
+      // pathfinderIndex[0] = ghostIndex[0]
+      console.log('pathfinderindex first=', pathfinderIndex)
+      console.log('shortest path =', shortest)
+      return shortest
+    }
+    
+    // pathfinderMove(pathfinder1Index, playerIndex)
+
+    function pathfinderMove(pathfinderIndex, destinationIndex, ghostIndex) {
       // let pathfinderIndex = pathfinderIndex
 
       let lastDirection = ''
-      const moveCounter = [0]
+      let moveCounter = [0]
       let wayClear = true
         
       const random1 = Math.floor(Math.random() * (4 - 1 + 1)) + 1
@@ -895,11 +924,12 @@ function init() {
           lastDirection = 'down'
           break
       }
-
+      pathfinderIndex[0] = ghostIndex[0]
+      destinationIndex = playerIndex
       let i = 0
       for (i = 0; i < 60; i++) {
         
-        chooseMove(pathfinderIndex)
+        chooseMove()
         // console.log('pathfinder1index =', pathfinder1Index)
         // console.log('movecounter =', moveCounter)
         if (i === 0) {
@@ -907,7 +937,7 @@ function init() {
         }
         if (pathfinderIndex[0] === destinationIndex) {
           lmPlusMc.push(moveCounter[0])
-          console.log('lmplusmc =', lmPlusMc)
+          // console.log('lmplusmc =', lmPlusMc)
           shortestPath.push(lmPlusMc)
           // if (i !== 0 && shortestPath[0][1] <= shortestPath[1][1]) {
           //   shortestPath.pop()
@@ -917,7 +947,7 @@ function init() {
           // lmPlusMc = []
         }
       }
-      
+      // console.log('shortestpath =', shortestPath)
       
   
       function chooseMove() {

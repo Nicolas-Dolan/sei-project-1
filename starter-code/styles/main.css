@@ -25,7 +25,7 @@ div.grid-item {
   width: 40px;
   height: 40px;
   border: 1px dashed black;
-  background-color: aqua;
+  background-color: white;
 }
 
 div.grid-item.player {
