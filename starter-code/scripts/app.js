@@ -18,6 +18,7 @@ function init() {
     let ghost2Index = [116]
     let ghost3Index = [117]
     let ghost4Index = [118]
+    const pathfinder1Index = [304]
     let timerId = ''
     const timerIdArray = []
     let moveable = true
@@ -109,7 +110,7 @@ function init() {
       // adds index number to each grid item
       squares.forEach((element, index) => element.innerHTML = index)
 
-      // addGhosts()
+      addGhosts()
     }
 
     
@@ -752,388 +753,500 @@ function init() {
     
     }
 
-    pathfinder(79)
+    // pathfinder(79, playerIndex)
 
-    function pathfinder(ghostIndex) {
-      let lastDirection = ''
-      let moveCounter = 0
+    // function pathfinder(startIndex, destinationIndex) {
+    //   let lastDirection = ''
+    //   let moveCounter = 0
+    //   let pathfinderIndex = startIndex
 
-      checkRoute()
+    // checkRoute()
 
-      function checkRoute() {
-        const pathfinderIndex = ghostIndex
-        const lmPlusMc = []
-        // lastDirection = ''
-        // moveCounter = 0
+    // function checkRoute() {
+    //   pathfinderIndex = startIndex
+    //   const lmPlusMc = []
+    //   // lastDirection = ''
+    //   // moveCounter = 0
   
 
-        let i = 0
-        for (i = 0; i < 50; i++) {
-          pathfinderMove(lastDirection)
-          if (i === 0) {
-            lmPlusMc.push(lastDirection)
-            console.log('pathfinder first last direction =', lastDirection)
-          }
-          if (pathfinderIndex === playerIndex) {
-            lmPlusMc.push(moveCounter)
-            console.log('player index move count =', moveCounter)
-          }
-        }
-        console.log('lmplusmc =', lmPlusMc)
+    //   let i = 0
+    //   for (i = 0; i < 50; i++) {
+    //     pathfinderMove(lastDirection)
+    //     if (i === 0) {
+    //       lmPlusMc.push(lastDirection)
+    //       console.log('pathfinder first last direction =', lastDirection)
+    //     }
+    //     if (pathfinderIndex === playerIndex) {
+    //       lmPlusMc.push(moveCounter)
+    //       console.log('player index move count =', moveCounter)
+    //     }
+    //   }
+    //   console.log('lmplusmc =', lmPlusMc)
+    // }
+    let shortestPath = []
+    let lmPlusMc = []
+    let shortest = ['default', 100]
+
+    findShortestPath(pathfinder1Index, playerIndex)
+
+
+    function findShortestPath(pathfinderIndex, destinationIndex) {
+
+      let i = 0
+      for (i = 0; i < 60; i++) {
+        pathfinderIndex = [304]
+        lmPlusMc = []
+        pathfinderMove(pathfinderIndex, destinationIndex)
+        // if (shortestPath[0][1] < shortestPath[1][1]) {
+        //   shortestPath.pop()
+        // } else shortestPath.shift()
       }
-      
-
-      function pathfinderMove(pathfinderIndex, lastDirection, moveCounter) {
-
-        lastDirection = ''
-        moveCounter = 0
-        let wayClear = true
-        
-        const random1 = Math.floor(Math.random() * (4 - 1 + 1)) + 1
-        switch (random1) {
-          case 1:
-            lastDirection = 'right'
-            break
-          case 2:
-            lastDirection = 'left'
-            break
-          case 3:
-            lastDirection = 'up'
-            break
-          case 4:
-            lastDirection = 'down'
-            break
+      console.log('shortest path array =', shortestPath)
+      // let shortest = ['default', 100]
+      shortestPath.map((element, index) => {
+        if (element[1] < shortest[1]) {
+          shortest = element
         }
-
-        chooseMove()
-      
-  
-        function chooseMove() {
-          const random = Math.floor(Math.random() * (3 - 1 + 1)) + 1
-          if (lastDirection === 'right') {
-            if (random === 1) {
-              moveRight()
-              if (wayClear === false) {
-                const random2 = Math.floor(Math.random() * (2 - 1 + 1)) + 1
-                if (random2 === 1) {
-                  moveUp()
-                  if (wayClear === false) {
-                    moveDown()
-                    if (wayClear === false) {
-                      moveLeft()
-                    }
-                  }
-                } else if (random2 === 2) {
-                  moveDown()
-                  if (wayClear === false) {
-                    moveUp()
-                    if (wayClear === false) {
-                      moveLeft()
-                    }
-                  }
-                } 
-              }
-            } else if (random === 2) {
-              moveUp()
-              if (wayClear === false) {
-                const random2 = Math.floor(Math.random() * (2 - 1 + 1)) + 1
-                if (random2 === 1) {
-                  moveRight()
-                  if (wayClear === false) {
-                    moveDown()
-                    if (wayClear === false) {
-                      moveLeft()
-                    }
-                  }
-                } else if (random2 === 2) {
-                  moveDown()
-                  if (wayClear === false) {
-                    moveRight()
-                    if (wayClear === false) {
-                      moveLeft()
-                    }
-                  }
-                } 
-              }
-            } if (random === 3) {
-              moveDown()
-              if (wayClear === false) {
-                const random2 = Math.floor(Math.random() * (2 - 1 + 1)) + 1
-                if (random2 === 1) {
-                  moveUp()
-                  if (wayClear === false) {
-                    moveRight()
-                    if (wayClear === false) {
-                      moveLeft()
-                    }
-                  }
-                } else if (random2 === 2) {
-                  moveRight()
-                  if (wayClear === false) {
-                    moveUp()
-                    if (wayClear === false) {
-                      moveLeft()
-                    }
-                  }
-                } 
-              }
-            }
-          } else if (lastDirection === 'left') {
-            if (random === 1) {
-              moveLeft()
-              if (wayClear === false) {
-                const random2 = Math.floor(Math.random() * (2 - 1 + 1)) + 1
-                if (random2 === 1) {
-                  moveUp()
-                  if (wayClear === false) {
-                    moveDown()
-                    if (wayClear === false) {
-                      moveRight()
-                    }
-                  }
-                } else if (random2 === 2) {
-                  moveDown()
-                  if (wayClear === false) {
-                    moveUp()
-                    if (wayClear === false) {
-                      moveRight()
-                    }
-                  }
-                } 
-              }
-            } else if (random === 2) {
-              moveUp()
-              if (wayClear === false) {
-                const random2 = Math.floor(Math.random() * (2 - 1 + 1)) + 1
-                if (random2 === 1) {
-                  moveLeft()
-                  if (wayClear === false) {
-                    moveDown()
-                    if (wayClear === false) {
-                      moveRight()
-                    }
-                  }
-                } else if (random2 === 2) {
-                  moveDown()
-                  if (wayClear === false) {
-                    moveLeft()
-                    if (wayClear === false) {
-                      moveRight()
-                    }
-                  }
-                } 
-              }
-            } if (random === 3) {
-              moveDown()
-              if (wayClear === false) {
-                const random2 = Math.floor(Math.random() * (2 - 1 + 1)) + 1
-                if (random2 === 1) {
-                  moveUp()
-                  if (wayClear === false) {
-                    moveLeft()
-                    if (wayClear === false) {
-                      moveRight()
-                    }
-                  }
-                } else if (random2 === 2) {
-                  moveLeft()
-                  if (wayClear === false) {
-                    moveUp()
-                    if (wayClear === false) {
-                      moveRight()
-                    }
-                  }
-                } 
-              }
-            }
-          } else if (lastDirection === 'up') {
-            if (random === 1) {
-              moveUp()
-              if (wayClear === false) {
-                const random2 = Math.floor(Math.random() * (2 - 1 + 1)) + 1
-                if (random2 === 1) {
-                  moveLeft()
-                  if (wayClear === false) {
-                    moveRight()
-                    if (wayClear === false) {
-                      moveDown()
-                    }
-                  }
-                } else if (random2 === 2) {
-                  moveRight()
-                  if (wayClear === false) {
-                    moveLeft()
-                    if (wayClear === false) {
-                      moveDown()
-                    }
-                  }
-                } 
-              }
-            } else if (random === 2) {
-              moveRight()
-              if (wayClear === false) {
-                const random2 = Math.floor(Math.random() * (2 - 1 + 1)) + 1
-                if (random2 === 1) {
-                  moveLeft()
-                  if (wayClear === false) {
-                    moveUp()
-                    if (wayClear === false) {
-                      moveDown()
-                    }
-                  }
-                } else if (random2 === 2) {
-                  moveUp()
-                  if (wayClear === false) {
-                    moveLeft()
-                    if (wayClear === false) {
-                      moveDown()
-                    }
-                  }
-                } 
-              }
-            } if (random === 3) {
-              moveLeft()
-              if (wayClear === false) {
-                const random2 = Math.floor(Math.random() * (2 - 1 + 1)) + 1
-                if (random2 === 1) {
-                  moveUp()
-                  if (wayClear === false) {
-                    moveRight()
-                    if (wayClear === false) {
-                      moveDown()
-                    }
-                  }
-                } else if (random2 === 2) {
-                  moveRight()
-                  if (wayClear === false) {
-                    moveUp()
-                    if (wayClear === false) {
-                      moveDown()
-                    }
-                  }
-                } 
-              }
-            }
-          } else if (lastDirection === 'down') {
-            if (random === 1) {
-              moveDown()
-              if (wayClear === false) {
-                const random2 = Math.floor(Math.random() * (2 - 1 + 1)) + 1
-                if (random2 === 1) {
-                  moveLeft()
-                  if (wayClear === false) {
-                    moveRight()
-                    if (wayClear === false) {
-                      moveUp()
-                    }
-                  }
-                } else if (random2 === 2) {
-                  moveRight()
-                  if (wayClear === false) {
-                    moveLeft()
-                    if (wayClear === false) {
-                      moveUp()
-                    }
-                  }
-                } 
-              }
-            } else if (random === 2) {
-              moveRight()
-              if (wayClear === false) {
-                const random2 = Math.floor(Math.random() * (2 - 1 + 1)) + 1
-                if (random2 === 1) {
-                  moveLeft()
-                  if (wayClear === false) {
-                    moveDown()
-                    if (wayClear === false) {
-                      moveUp()
-                    }
-                  }
-                } else if (random2 === 2) {
-                  moveDown()
-                  if (wayClear === false) {
-                    moveLeft()
-                    if (wayClear === false) {
-                      moveUp()
-                    }
-                  }
-                } 
-              }
-            } if (random === 3) {
-              moveLeft()
-              if (wayClear === false) {
-                const random2 = Math.floor(Math.random() * (2 - 1 + 1)) + 1
-                if (random2 === 1) {
-                  moveDown()
-                  if (wayClear === false) {
-                    moveRight()
-                    if (wayClear === false) {
-                      moveUp()
-                    }
-                  }
-                } else if (random2 === 2) {
-                  moveRight()
-                  if (wayClear === false) {
-                    moveDown()
-                    if (wayClear === false) {
-                      moveUp()
-                    }
-                  }
-                } 
-              }
-            }
-          }
-        }
-  
-        function moveRight() {
-          if (pathfinderIndex[0] === 161 && !squares[144].classList.contains('ghostAny')) {
-            pathfinderIndex[0] = 144
-            lastDirection = 'right'
-            moveCounter++
-            wayClear = true
-          } else if (pathfinderIndex[0] % width < width - 1 && !squares[pathfinderIndex[0] + 1].classList.contains('wall') && !squares[pathfinderIndex[0] + 1].classList.contains('ghostAny')) {
-            pathfinderIndex[0]++
-            lastDirection = 'right'
-            moveCounter++
-            wayClear = true
-          } else wayClear = false
-        }
-  
-        function moveLeft() {
-          if (pathfinderIndex[0] === 144 && !squares[161].classList.contains('ghostAny')) {
-            pathfinderIndex[0] = 161
-            lastDirection = 'left'
-            moveCounter++
-            wayClear = true
-          } else if (pathfinderIndex[0] % width > 0 && !squares[pathfinderIndex[0] - 1].classList.contains('wall') && !squares[pathfinderIndex[0] - 1].classList.contains('ghostAny')) {
-            pathfinderIndex[0]--
-            lastDirection = 'left'
-            moveCounter++
-            wayClear = true
-          } else wayClear = false
-        }
-  
-        function moveDown() {
-          if (pathfinderIndex[0] + width < width * width && !squares[pathfinderIndex[0] + width].classList.contains('wall') && !squares[pathfinderIndex[0] + width].classList.contains('ghostAny')) {
-            pathfinderIndex[0] += width
-            lastDirection = 'down'
-            moveCounter++
-            wayClear = true
-          } else wayClear = false
-        }
-  
-        function moveUp() {
-          if (pathfinderIndex[0] - width >= 0 && !squares[pathfinderIndex[0] - width].classList.contains('wall') && !squares[pathfinderIndex[0] - width].classList.contains('ghostAny')) {
-            pathfinderIndex[0] -= width
-            lastDirection = 'up'
-            moveCounter++
-            wayClear = true
-          } else wayClear = false
-        }
-      
-      }
-      
+      })
+      console.log('shortest path =', shortest)
+      return shortest
     }
+
+    function chasePlayer(ghostIndex, ghost, destinationIndex) {
+      destinationIndex = playerIndex
+      findShortestPath(ghostIndex, destinationIndex)
+      if (shortest[0] === 'right') {
+        moveRightC()
+      } else if (shortest[0] === 'left') {
+        moveLeftC()
+      } else if (shortest[0] === 'up') {
+        moveUpC()
+      } else if (shortest[0] === 'down') {
+        moveDownC()
+      }
+      squares.forEach((square) => {
+        if (square.classList.contains(ghost) && square.classList.contains('ghostAny')) {
+          square.classList.remove('ghostAny')
+        }
+      })
+      squares.forEach(square => square.classList.remove(ghost))
+      squares[ghostIndex[0]].classList.add(ghost)
+      squares[ghostIndex[0]].classList.add('ghostAny')
+      ghostMoved()
+
+      function moveRightC() {
+        if (ghostIndex[0] === 161 && !squares[144].classList.contains('ghostAny')) {
+          ghostIndex[0] = 144
+          ghostMoved()
+        } else if (ghostIndex[0] % width < width - 1 && !squares[ghostIndex[0] + 1].classList.contains('wall') && !squares[ghostIndex[0] + 1].classList.contains('ghostAny')) {
+          ghostIndex[0]++
+          ghostMoved()
+        }
+      }
+
+      function moveLeftC() {
+        if (ghostIndex[0] === 144 && !squares[161].classList.contains('ghostAny')) {
+          ghostIndex[0] = 161
+          ghostMoved()
+        } else if (ghostIndex[0] % width > 0 && !squares[ghostIndex[0] - 1].classList.contains('wall') && !squares[ghostIndex[0] - 1].classList.contains('ghostAny')) {
+          ghostIndex[0]--
+          ghostMoved()
+        }
+      }
+
+      function moveDownC() {
+        if (ghostIndex[0] + width < width * width && !squares[ghostIndex[0] + width].classList.contains('wall') && !squares[ghostIndex[0] + width].classList.contains('ghostAny')) {
+          ghostIndex[0] += width
+          ghostMoved()
+        } 
+      }
+
+      function moveUpC() {
+        if (ghostIndex[0] - width >= 0 && !squares[ghostIndex[0] - width].classList.contains('wall') && !squares[ghostIndex[0] - width].classList.contains('ghostAny')) {
+          ghostIndex[0] -= width
+          ghostMoved()
+      }
+    }
+  }
+    
+    
+    
+
+
+    function pathfinderMove(pathfinderIndex, destinationIndex) {
+      // let pathfinderIndex = pathfinderIndex
+
+      let lastDirection = ''
+      const moveCounter = [0]
+      let wayClear = true
+        
+      const random1 = Math.floor(Math.random() * (4 - 1 + 1)) + 1
+      switch (random1) {
+        case 1:
+          lastDirection = 'right'
+          break
+        case 2:
+          lastDirection = 'left'
+          break
+        case 3:
+          lastDirection = 'up'
+          break
+        case 4:
+          lastDirection = 'down'
+          break
+      }
+
+      let i = 0
+      for (i = 0; i < 60; i++) {
+        
+        chooseMove(pathfinderIndex)
+        // console.log('pathfinder1index =', pathfinder1Index)
+        // console.log('movecounter =', moveCounter)
+        if (i === 0) {
+          lmPlusMc.push(lastDirection)
+        }
+        if (pathfinderIndex[0] === destinationIndex) {
+          lmPlusMc.push(moveCounter[0])
+          console.log('lmplusmc =', lmPlusMc)
+          shortestPath.push(lmPlusMc)
+          // if (i !== 0 && shortestPath[0][1] <= shortestPath[1][1]) {
+          //   shortestPath.pop()
+          // } else if (i !== 0 && shortestPath[0][1] > shortestPath[1][1]) {
+          //   shortestPath.shift()
+          // }
+          // lmPlusMc = []
+        }
+      }
+      
+      
+  
+      function chooseMove() {
+        const random = Math.floor(Math.random() * (3 - 1 + 1)) + 1
+        if (lastDirection === 'right') {
+          if (random === 1) {
+            moveRight()
+            if (wayClear === false) {
+              const random2 = Math.floor(Math.random() * (2 - 1 + 1)) + 1
+              if (random2 === 1) {
+                moveUp()
+                if (wayClear === false) {
+                  moveDown()
+                  if (wayClear === false) {
+                    moveLeft()
+                  }
+                }
+              } else if (random2 === 2) {
+                moveDown()
+                if (wayClear === false) {
+                  moveUp()
+                  if (wayClear === false) {
+                    moveLeft()
+                  }
+                }
+              } 
+            }
+          } else if (random === 2) {
+            moveUp()
+            if (wayClear === false) {
+              const random2 = Math.floor(Math.random() * (2 - 1 + 1)) + 1
+              if (random2 === 1) {
+                moveRight()
+                if (wayClear === false) {
+                  moveDown()
+                  if (wayClear === false) {
+                    moveLeft()
+                  }
+                }
+              } else if (random2 === 2) {
+                moveDown()
+                if (wayClear === false) {
+                  moveRight()
+                  if (wayClear === false) {
+                    moveLeft()
+                  }
+                }
+              } 
+            }
+          } if (random === 3) {
+            moveDown()
+            if (wayClear === false) {
+              const random2 = Math.floor(Math.random() * (2 - 1 + 1)) + 1
+              if (random2 === 1) {
+                moveUp()
+                if (wayClear === false) {
+                  moveRight()
+                  if (wayClear === false) {
+                    moveLeft()
+                  }
+                }
+              } else if (random2 === 2) {
+                moveRight()
+                if (wayClear === false) {
+                  moveUp()
+                  if (wayClear === false) {
+                    moveLeft()
+                  }
+                }
+              } 
+            }
+          }
+        } else if (lastDirection === 'left') {
+          if (random === 1) {
+            moveLeft()
+            if (wayClear === false) {
+              const random2 = Math.floor(Math.random() * (2 - 1 + 1)) + 1
+              if (random2 === 1) {
+                moveUp()
+                if (wayClear === false) {
+                  moveDown()
+                  if (wayClear === false) {
+                    moveRight()
+                  }
+                }
+              } else if (random2 === 2) {
+                moveDown()
+                if (wayClear === false) {
+                  moveUp()
+                  if (wayClear === false) {
+                    moveRight()
+                  }
+                }
+              } 
+            }
+          } else if (random === 2) {
+            moveUp()
+            if (wayClear === false) {
+              const random2 = Math.floor(Math.random() * (2 - 1 + 1)) + 1
+              if (random2 === 1) {
+                moveLeft()
+                if (wayClear === false) {
+                  moveDown()
+                  if (wayClear === false) {
+                    moveRight()
+                  }
+                }
+              } else if (random2 === 2) {
+                moveDown()
+                if (wayClear === false) {
+                  moveLeft()
+                  if (wayClear === false) {
+                    moveRight()
+                  }
+                }
+              } 
+            }
+          } if (random === 3) {
+            moveDown()
+            if (wayClear === false) {
+              const random2 = Math.floor(Math.random() * (2 - 1 + 1)) + 1
+              if (random2 === 1) {
+                moveUp()
+                if (wayClear === false) {
+                  moveLeft()
+                  if (wayClear === false) {
+                    moveRight()
+                  }
+                }
+              } else if (random2 === 2) {
+                moveLeft()
+                if (wayClear === false) {
+                  moveUp()
+                  if (wayClear === false) {
+                    moveRight()
+                  }
+                }
+              } 
+            }
+          }
+        } else if (lastDirection === 'up') {
+          if (random === 1) {
+            moveUp()
+            if (wayClear === false) {
+              const random2 = Math.floor(Math.random() * (2 - 1 + 1)) + 1
+              if (random2 === 1) {
+                moveLeft()
+                if (wayClear === false) {
+                  moveRight()
+                  if (wayClear === false) {
+                    moveDown()
+                  }
+                }
+              } else if (random2 === 2) {
+                moveRight()
+                if (wayClear === false) {
+                  moveLeft()
+                  if (wayClear === false) {
+                    moveDown()
+                  }
+                }
+              } 
+            }
+          } else if (random === 2) {
+            moveRight()
+            if (wayClear === false) {
+              const random2 = Math.floor(Math.random() * (2 - 1 + 1)) + 1
+              if (random2 === 1) {
+                moveLeft()
+                if (wayClear === false) {
+                  moveUp()
+                  if (wayClear === false) {
+                    moveDown()
+                  }
+                }
+              } else if (random2 === 2) {
+                moveUp()
+                if (wayClear === false) {
+                  moveLeft()
+                  if (wayClear === false) {
+                    moveDown()
+                  }
+                }
+              } 
+            }
+          } if (random === 3) {
+            moveLeft()
+            if (wayClear === false) {
+              const random2 = Math.floor(Math.random() * (2 - 1 + 1)) + 1
+              if (random2 === 1) {
+                moveUp()
+                if (wayClear === false) {
+                  moveRight()
+                  if (wayClear === false) {
+                    moveDown()
+                  }
+                }
+              } else if (random2 === 2) {
+                moveRight()
+                if (wayClear === false) {
+                  moveUp()
+                  if (wayClear === false) {
+                    moveDown()
+                  }
+                }
+              } 
+            }
+          }
+        } else if (lastDirection === 'down') {
+          if (random === 1) {
+            moveDown()
+            if (wayClear === false) {
+              const random2 = Math.floor(Math.random() * (2 - 1 + 1)) + 1
+              if (random2 === 1) {
+                moveLeft()
+                if (wayClear === false) {
+                  moveRight()
+                  if (wayClear === false) {
+                    moveUp()
+                  }
+                }
+              } else if (random2 === 2) {
+                moveRight()
+                if (wayClear === false) {
+                  moveLeft()
+                  if (wayClear === false) {
+                    moveUp()
+                  }
+                }
+              } 
+            }
+          } else if (random === 2) {
+            moveRight()
+            if (wayClear === false) {
+              const random2 = Math.floor(Math.random() * (2 - 1 + 1)) + 1
+              if (random2 === 1) {
+                moveLeft()
+                if (wayClear === false) {
+                  moveDown()
+                  if (wayClear === false) {
+                    moveUp()
+                  }
+                }
+              } else if (random2 === 2) {
+                moveDown()
+                if (wayClear === false) {
+                  moveLeft()
+                  if (wayClear === false) {
+                    moveUp()
+                  }
+                }
+              } 
+            }
+          } if (random === 3) {
+            moveLeft()
+            if (wayClear === false) {
+              const random2 = Math.floor(Math.random() * (2 - 1 + 1)) + 1
+              if (random2 === 1) {
+                moveDown()
+                if (wayClear === false) {
+                  moveRight()
+                  if (wayClear === false) {
+                    moveUp()
+                  }
+                }
+              } else if (random2 === 2) {
+                moveRight()
+                if (wayClear === false) {
+                  moveDown()
+                  if (wayClear === false) {
+                    moveUp()
+                  }
+                }
+              } 
+            }
+          }
+        }
+      }
+  
+      function moveRight() {
+        if (pathfinderIndex[0] === 161 && !squares[144].classList.contains('ghostAny')) {
+          pathfinderIndex[0] = 144
+          lastDirection = 'right'
+          moveCounter[0]++
+          wayClear = true
+        } else if (pathfinderIndex[0] % width < width - 1 && !squares[pathfinderIndex[0] + 1].classList.contains('wall') && !squares[pathfinderIndex[0] + 1].classList.contains('ghostAny')) {
+          pathfinderIndex[0]++
+          lastDirection = 'right'
+          moveCounter[0]++
+          wayClear = true
+        } else wayClear = false
+      }
+  
+      function moveLeft() {
+        if (pathfinderIndex[0] === 144 && !squares[161].classList.contains('ghostAny')) {
+          pathfinderIndex[0] = 161
+          lastDirection = 'left'
+          moveCounter[0]++
+          wayClear = true
+        } else if (pathfinderIndex[0] % width > 0 && !squares[pathfinderIndex[0] - 1].classList.contains('wall') && !squares[pathfinderIndex[0] - 1].classList.contains('ghostAny')) {
+          pathfinderIndex[0]--
+          lastDirection = 'left'
+          moveCounter[0]++
+          wayClear = true
+        } else wayClear = false
+      }
+  
+      function moveDown() {
+        if (pathfinderIndex[0] + width < width * width && !squares[pathfinderIndex[0] + width].classList.contains('wall') && !squares[pathfinderIndex[0] + width].classList.contains('ghostAny')) {
+          pathfinderIndex[0] += width
+          lastDirection = 'down'
+          moveCounter[0]++
+          wayClear = true
+        } else wayClear = false
+      }
+  
+      function moveUp() {
+        if (pathfinderIndex[0] - width >= 0 && !squares[pathfinderIndex[0] - width].classList.contains('wall') && !squares[pathfinderIndex[0] - width].classList.contains('ghostAny')) {
+          pathfinderIndex[0] -= width
+          lastDirection = 'up'
+          moveCounter[0]++
+          wayClear = true
+        } else wayClear = false
+      }
+    }
+      
+      
+      
+    
 
     
     
