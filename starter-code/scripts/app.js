@@ -93,24 +93,27 @@ function init() {
       drawBlock(92, 105)
       drawBlock(114, 132)
       drawBlock(26, 63)
-      drawBlock(38, 60)
-      drawBlock(47, 69)
+      drawBlock(38, 57)
+      drawBlock(41, 60)
+      drawBlock(47, 66)
+      drawBlock(50, 69)
       drawBlock(127, 130)
-      drawBlock(163, 184)
+      drawBlock(164, 184)
       drawBlock(218, 238)
-      drawBlock(272, 285)
+      drawBlock(272, 276)
       drawBlock(119, 137)
       drawBlock(134, 153)
       drawBlock(139, 142)
-      drawBlock(175, 196)
-      drawBlock(168, 186)
-      drawBlock(173, 191)
+      drawBlock(175, 195)
+      drawBlock(168, 204)
+      drawBlock(173, 209)
       drawBlock(187, 190)
-      drawBlock(206, 225)
+      drawBlock(224, 225)
       drawBlock(229, 249)
-      drawBlock(222, 258)
-      drawBlock(227, 263)
-      drawBlock(259, 262)
+      drawBlock(240, 258)
+      drawBlock(245, 263)
+      drawBlock(260, 279)
+      drawBlock(281, 285)
       // wallIndices.remove(144)
       wallIndices.forEach((element, index, array) => {
         if (element === 144 || element === 161) {
@@ -129,7 +132,7 @@ function init() {
       // adds index number to each grid item
       squares.forEach((element, index) => element.innerHTML = index)
 
-      addGhosts()
+      // addGhosts()
     }
 
     
@@ -446,11 +449,11 @@ function init() {
                 console.log('Pink and Red are chasing again') 
               }, (15000 / round))
               cycleMoveArray.push(finalChase)
-            }, 15000)  
+            }, 20000)  
             cycleMoveArray.push(secondReprieve)
           }, (15000 / round))
           cycleMoveArray.push(secondChase)
-        }, 15000)
+        }, 20000)
         cycleMoveArray.push(firstReprieve)
       }, (5000 / round))
       cycleMoveArray.push(firstChase)
@@ -479,6 +482,12 @@ function init() {
         ghostsFlee = false
         ghostEatCount = 0
         timerIdArray.forEach(element => clearInterval(element))
+        squares.forEach((square) => {
+          square.classList.remove('scaredghost')
+        })
+        squares.forEach((square) => {
+          square.classList.remove('ghostWhite')
+        })
         ghostMoveAll()
         cycleMoveType()
         console.log('ghosts flee=', ghostsFlee, 'flee end soon=', fleeEndSoon)
@@ -786,15 +795,15 @@ function init() {
             }
           }
     
-          squares.forEach((square) => {
-            if (square.classList.contains(ghost) && square.classList.contains('ghostAny')) {
-              square.classList.remove('ghostAny')
-            }
-          })
-          squares.forEach(square => square.classList.remove(ghost))
-          squares[ghostIndex[0]].classList.add(ghost)
-          squares[ghostIndex[0]].classList.add('ghostAny')
-          ghostMoved()
+        //   squares.forEach((square) => {
+        //     if (square.classList.contains(ghost) && square.classList.contains('ghostAny')) {
+        //       square.classList.remove('ghostAny')
+        //     }
+        //   })
+        //   squares.forEach(square => square.classList.remove(ghost))
+        //   squares[ghostIndex[0]].classList.add(ghost)
+        //   squares[ghostIndex[0]].classList.add('ghostAny')
+        //   ghostMoved()
         } else chooseMove()
 
 
@@ -1073,16 +1082,41 @@ function init() {
               }
             }
           }
-          squares.forEach((square) => {
-            if (square.classList.contains(ghost) && square.classList.contains('ghostAny')) {
-              square.classList.remove('ghostAny')
-            }
-          })
-          squares.forEach(square => square.classList.remove(ghost))
-          squares[ghostIndex[0]].classList.add(ghost)
-          squares[ghostIndex[0]].classList.add('ghostAny')
-          ghostMoved()
+          // squares.forEach((square) => {
+          //   if (square.classList.contains(ghost) && square.classList.contains('ghostAny')) {
+          //     square.classList.remove('ghostAny')
+          //   }
+          // })
+          // squares.forEach(square => square.classList.remove(ghost))
+          // squares[ghostIndex[0]].classList.add(ghost)
+          // squares[ghostIndex[0]].classList.add('ghostAny')
+          // ghostMoved()
         }
+
+        squares.forEach((square) => {
+          if (square.classList.contains(ghost) && square.classList.contains('ghostAny')) {
+            square.classList.remove('ghostAny')
+          }
+        })
+        squares.forEach((square) => {
+          if (square.classList.contains(ghost) && square.classList.contains('scaredghost')) {
+            square.classList.remove('scaredghost')
+          }
+        })
+        
+        squares.forEach((square) => {
+          if (square.classList.contains(ghost) && square.classList.contains('ghostWhite')) {
+            square.classList.remove('ghostWhite')
+          }
+        })
+        squares.forEach(square => square.classList.remove(ghost))
+        squares[ghostIndex[0]].classList.add(ghost)
+        squares[ghostIndex[0]].classList.add('ghostAny')
+        squares[ghostIndex[0]].classList.add('scaredghost')
+        if (fleeEndSoon) {
+          squares[ghostIndex[0]].classList.add('ghostWhite')
+        }
+        ghostMoved()
        
   
         

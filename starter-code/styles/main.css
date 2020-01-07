@@ -107,3 +107,17 @@ div.grid-item.ghost4 {
   background-size: 100%;
   background-position: center;
 }
+
+div.grid-item.scaredghost.ghostAny {
+  background-image: url('../assets/scaredghost.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+}
+
+div.grid-item.scaredghost.ghostAny.ghostWhite {
+  background-image: url('../assets/ghostwhite.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+}
