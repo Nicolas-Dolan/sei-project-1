@@ -148,7 +148,7 @@ function init() {
 
       addWallEdges()
 
-      addGhosts()
+      // addGhosts()
     }
 
     
@@ -169,30 +169,36 @@ function init() {
           case 39:
             if (moveable && playerIndex === 161) {
               playerIndex = 144
+              playerMoved()
               moveTimer()
             } else if (moveable && playerIndex % width < width - 1 && !squares[playerIndex + 1].classList.contains('wall')) {
               playerIndex++
+              playerMoved()
               moveTimer()
             }
             break
           case 37:
             if (moveable && playerIndex === 144) {
               playerIndex = 161
+              playerMoved()
               moveTimer()
             } else if (moveable && playerIndex % width > 0 && !squares[playerIndex - 1].classList.contains('wall')) {
               playerIndex--
+              playerMoved()
               moveTimer()
             }
             break
           case 40:
             if (moveable && playerIndex + width < width * width && !squares[playerIndex + width].classList.contains('wall')) {
               playerIndex += width
+              playerMoved()
               moveTimer()
             }
             break
           case 38:
             if (moveable && playerIndex - width >= 0 && !squares[playerIndex - width].classList.contains('wall') && !squares[playerIndex - width].classList.contains('gate')) {
               playerIndex -= width
+              playerMoved()
               moveTimer()
             } 
             break
@@ -204,9 +210,11 @@ function init() {
           case 37:
             if (moveable && playerIndex === 161) {
               playerIndex = 144
+              playerMoved()
               moveTimer()
             } else if (moveable && playerIndex % width < width - 1 && !squares[playerIndex + 1].classList.contains('wall')) {
               playerIndex++
+              playerMoved()
               moveTimer()
             }
             break
@@ -214,20 +222,24 @@ function init() {
             if (moveable && playerIndex === 144) {
               playerIndex = 161
               moveTimer()
+              playerMoved()
             } else if (moveable && playerIndex % width > 0 && !squares[playerIndex - 1].classList.contains('wall')) {
               playerIndex--
+              playerMoved()
               moveTimer()
             }
             break
           case 38:
             if (moveable && playerIndex + width < width * width && !squares[playerIndex + width].classList.contains('wall')) {
               playerIndex += width
+              playerMoved()
               moveTimer()
             }
             break
           case 40:
             if (moveable && playerIndex - width >= 0 && !squares[playerIndex - width].classList.contains('wall') && !squares[playerIndex - width].classList.contains('gate')) {
               playerIndex -= width
+              playerMoved()
               moveTimer()
             } 
             break
@@ -238,7 +250,7 @@ function init() {
       
       squares.forEach(square => square.classList.remove('player'))
       squares[playerIndex].classList.add('player')
-      playerMoved()
+      // playerMoved()
     // console.log('current player index is' , playerIndex)
     // console.log('score', score)
     }
@@ -302,6 +314,23 @@ function init() {
     }
     
 
+    function generateTreasure() {
+      const treasureArray = []
+      squares.forEach((element, index) => {
+        if (!squares[index].classList.contains('wall') && !squares[index].classList.contains('player') && !squares[index].classList.contains('bigCoin') && !squares[index].classList.contains('prison') && !squares[index].classList.contains('gate') && !squares[index].classList.contains('treasure')) {
+          treasureArray.push(index)
+          console.log('treasure index pushed', index)
+        }
+      }) 
+      console.log('treasure array', treasureArray)
+      const randomTI = Math.floor(Math.random() * (treasureArray.length - 1 + 1)) + 1
+      squares[treasureArray[randomTI]].classList.add('treasure')
+      console.log('treasure generated at index', randomTI)
+    }
+    
+
+
+
     
 
     //the below functions contribute towards the game mechanics
@@ -326,11 +355,23 @@ function init() {
       }
     }
 
+    function eatTreasure() {
+      if (squares[playerIndex].classList.contains('treasure')) {
+        squares[playerIndex].classList.remove('treasure')
+        gainPoints(1000)
+      }
+    }
+
     function playerMoved() {
       eatSmallCoin()
       eatBigCoin()
+      eatTreasure()
       checkCoins()
       checkGhost()
+      const randomN1 = Math.floor(Math.random() * (100 - 1 + 1)) + 1
+      if (randomN1 === 50) {
+        generateTreasure()
+      }
     // console.log('number of coins remaining', checkCoins())
     }
 
@@ -469,6 +510,9 @@ function init() {
       squares.forEach((square) => {
         square.classList.remove('statusGiven')
       })
+      squares.forEach((square) => {
+        square.classList.remove('treasure')
+      })
       ghostsFlee = false
       fleeEndSoon = false
       hobbled = false
@@ -544,6 +588,7 @@ function init() {
         ghost1Index = [115]
         squares[ghost1Index[0]].classList.add('ghostAny')
         squares[ghost1Index[0]].classList.add('ghost1')
+        squares[ghost1Index[0]].classList.add('statusGiven')
         cycleMoveType()
       }
       if (squares[playerIndex].classList.contains('ghost2')) {
@@ -553,6 +598,7 @@ function init() {
         ghost2Index = [116]
         squares[ghost2Index[0]].classList.add('ghostAny')
         squares[ghost2Index[0]].classList.add('ghost2')
+        squares[ghost2Index[0]].classList.add('statusGiven')
         cycleMoveType()
       }
       if (squares[playerIndex].classList.contains('ghost4')) {
@@ -562,6 +608,7 @@ function init() {
         ghost4Index = [118]
         squares[ghost4Index[0]].classList.add('ghostAny')
         squares[ghost4Index[0]].classList.add('ghost4')
+        squares[ghost4Index[0]].classList.add('statusGiven')
         cycleMoveType()
       }
     }
