@@ -115,48 +115,48 @@ div.scores1, div.scores2, div.scores3, div.scores4, div.scores5 {
 }
 
 div.grid-item.ghost1 {
-  background-image: url('../assets/ghost1.png');
+  background-image: url('../assets/goblingreen.png');
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: center;
 }
 
 div.grid-item.ghost2 {
-  background-image: url('../assets/ghost2.png');
+  background-image: url('../assets/goblinblue.png');
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: 130%;
   background-position: center;
 }
 
 div.grid-item.ghost3 {
-  background-image: url('../assets/ghost3.png');
+  background-image: url('../assets/ogrepurple.png');
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: center;
 }
 
 div.grid-item.ghost4 {
-  background-image: url('../assets/ghost4.ico');
+  background-image: url('../assets/goblinred.png');
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: center;
 }
 div.grid-item.ghost1.statusGiven {
-  background-image: url('../assets/pacman.jpg');
+  background-image: url('../assets/goblinyellow.png');
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: center;
 }
 
 div.grid-item.ghost2.statusGiven {
-  background-image: url('../assets/pacman.jpg');
+  background-image: url('../assets/goblinyellow.png');
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: center;
 }
 
 div.grid-item.ghost4.statusGiven {
-  background-image: url('../assets/pacman.jpg');
+  background-image: url('../assets/goblinyellow.png');
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: center;
@@ -170,14 +170,28 @@ div.grid-item.ghost3.hunting {
 }
 
 div.grid-item.scaredghost.ghostAny {
-  background-image: url('../assets/scaredghost.png');
+  background-image: url('../assets/goblinwhite.png');
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: center;
 }
 
 div.grid-item.scaredghost.ghostAny.ghostWhite {
-  background-image: url('../assets/ghostwhite.png');
+  background-image: url('../assets/goblingrey.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+}
+
+div.grid-item.scaredghost.ghostAny.ghost3 {
+  background-image: url('../assets/ogrewhite.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+}
+
+div.grid-item.scaredghost.ghostAny.ghostWhite.ghost3 {
+  background-image: url('../assets/ogregrey.png');
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: center;

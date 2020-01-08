@@ -148,7 +148,7 @@ function init() {
 
       addWallEdges()
 
-      // addGhosts()
+      addGhosts()
     }
 
     
@@ -788,6 +788,7 @@ function init() {
         squares.forEach((square) => {
           square.classList.remove('hunting')
         })
+        squares.forEach(square => square.classList.remove('sword'))
         cycleMoveType()
         console.log('ghosts flee=', ghostsFlee, 'flee end soon=', fleeEndSoon)
       }, (7000 - (round * 50)))
