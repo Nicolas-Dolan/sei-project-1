@@ -74,6 +74,13 @@ div.grid-item.treasure {
   background-position: center;
 }
 
+div.grid-item.potion {
+  background-image: url('../assets/potion.jpg');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+}
+
 div.startScrn {
   display: flex;
   justify-content: center;

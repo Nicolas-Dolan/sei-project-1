@@ -319,13 +319,27 @@ function init() {
       squares.forEach((element, index) => {
         if (!squares[index].classList.contains('wall') && !squares[index].classList.contains('player') && !squares[index].classList.contains('bigCoin') && !squares[index].classList.contains('prison') && !squares[index].classList.contains('gate') && !squares[index].classList.contains('treasure')) {
           treasureArray.push(index)
-          console.log('treasure index pushed', index)
+          // console.log('treasure index pushed', index)
         }
       }) 
-      console.log('treasure array', treasureArray)
+      // console.log('treasure array', treasureArray)
       const randomTI = Math.floor(Math.random() * (treasureArray.length - 1 + 1)) + 1
       squares[treasureArray[randomTI]].classList.add('treasure')
       console.log('treasure generated at index', randomTI)
+    }
+
+    function generatePotion() {
+      const potionArray = []
+      squares.forEach((element, index) => {
+        if (!squares[index].classList.contains('wall') && !squares[index].classList.contains('player') && !squares[index].classList.contains('bigCoin') && !squares[index].classList.contains('prison') && !squares[index].classList.contains('gate') && !squares[index].classList.contains('treasure') && !squares[index].classList.contains('potion')) {
+          potionArray.push(index)
+          // console.log('treasure index pushed', index)
+        }
+      }) 
+      // console.log('treasure array', treasureArray)
+      const randomPI = Math.floor(Math.random() * (potionArray.length - 1 + 1)) + 1
+      squares[potionArray[randomPI]].classList.add('potion')
+      console.log('potion generated at index', randomPI)
     }
     
 
@@ -362,16 +376,42 @@ function init() {
       }
     }
 
+    function eatPotion() {
+      if (squares[playerIndex].classList.contains('potion')) {
+        squares[playerIndex].classList.remove('potion')
+        gainPoints(200)
+        potionHeal()
+      }
+    }
+
+    function potionHeal(){
+      tracked = false
+      confused = false
+      hobbled = false
+      healthyStat.style.display = 'block'
+      hobbledStat.style.display = 'none'
+      confusedStat.style.display = 'none'
+      trackedStat.style.display = 'none'
+    }
+
     function playerMoved() {
       eatSmallCoin()
       eatBigCoin()
       eatTreasure()
+      eatPotion()
       checkCoins()
       checkGhost()
       const randomN1 = Math.floor(Math.random() * (100 - 1 + 1)) + 1
       if (randomN1 === 50) {
         generateTreasure()
       }
+      if (tracked || confused || hobbled) {
+        const randomN2 = Math.floor(Math.random() * (20 - 1 + 1)) + 1
+        if (randomN2 === 10) {
+          generatePotion()
+        }
+      }
+      
     // console.log('number of coins remaining', checkCoins())
     }
 
@@ -512,6 +552,9 @@ function init() {
       })
       squares.forEach((square) => {
         square.classList.remove('treasure')
+      })
+      squares.forEach((square) => {
+        square.classList.remove('potion')
       })
       ghostsFlee = false
       fleeEndSoon = false
