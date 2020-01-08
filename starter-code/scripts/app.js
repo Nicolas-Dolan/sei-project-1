@@ -88,6 +88,12 @@ function init() {
 
       // places player at the starting position when grid has finished building
       squares[playerIndex].classList.add('player')
+      squares[133].classList.add('gate')
+      squares[136].classList.add('gate')
+      squares[115].classList.add('prison')
+      squares[116].classList.add('prison')
+      squares[117].classList.add('prison')
+      squares[118].classList.add('prison')
 
       addPerimeterWalls()
       drawBlock(92, 105)
@@ -120,6 +126,7 @@ function init() {
           array.splice(index, 2)
         }
       })
+      
 
       // console.log('wallIndices', wallIndices)
 
@@ -127,12 +134,14 @@ function init() {
       wallIndices.forEach((element) => squares[element].classList.add('wall'))
 
       addBigCoins()
-      // addSmallCoins()
+      addSmallCoins()
 
       // adds index number to each grid item
       squares.forEach((element, index) => element.innerHTML = index)
 
-      // addGhosts()
+      addWallEdges()
+
+      addGhosts()
     }
 
     
@@ -171,7 +180,7 @@ function init() {
           }
           break
         case 38:
-          if (moveable && playerIndex - width >= 0 && !squares[playerIndex - width].classList.contains('wall')) {
+          if (moveable && playerIndex - width >= 0 && !squares[playerIndex - width].classList.contains('wall') && !squares[playerIndex - width].classList.contains('gate')) {
             playerIndex -= width
             moveTimer()
           } 
@@ -216,6 +225,15 @@ function init() {
       }
     }
 
+    function addWallEdges() {
+      squares.forEach((element, index) => {
+        if (squares[index] < (width * width - 1) && squares[index].classList.contains('wall') && !squares[index + 1].classList.contains('wall')) {
+          squares[index].classList.add('rightEdge')
+        }
+      }) 
+      // console.log('squares 39', squares)
+    }
+
     
 
     function addBigCoins() {
@@ -229,7 +247,7 @@ function init() {
   
     function addSmallCoins() {
       squares.forEach((element, index) => {
-        if (!squares[index].classList.contains('wall') && !squares[index].classList.contains('player') && !squares[index].classList.contains('bigCoin')) {
+        if (!squares[index].classList.contains('wall') && !squares[index].classList.contains('player') && !squares[index].classList.contains('bigCoin') && !squares[index].classList.contains('prison') && !squares[index].classList.contains('gate')) {
           squares[index].classList.add('smallCoin')
         }
       }) 
@@ -1165,7 +1183,7 @@ function init() {
       }
   
       function moveUp() {
-        if (ghostIndex[0] - width >= 0 && !squares[ghostIndex[0] - width].classList.contains('wall') && !squares[ghostIndex[0] - width].classList.contains('ghostAny')) {
+        if (ghostIndex[0] - width >= 0 && !squares[ghostIndex[0] - width].classList.contains('wall') && !squares[ghostIndex[0] - width].classList.contains('ghostAny') && !squares[ghostIndex[0] - width].classList.contains('gate')) {
           ghostIndex[0] -= width
           lastDirection = 'up'
           moveCounter++
@@ -1563,7 +1581,7 @@ function init() {
       }
 
       function moveUp() {
-        if (ghostIndex[0] - width >= 0 && !squares[ghostIndex[0] - width].classList.contains('wall') && !squares[ghostIndex[0] - width].classList.contains('ghostAny')) {
+        if (ghostIndex[0] - width >= 0 && !squares[ghostIndex[0] - width].classList.contains('wall') && !squares[ghostIndex[0] - width].classList.contains('ghostAny') && !squares[ghostIndex[0] - width].classList.contains('gate')) {
           ghostIndex[0] -= width
           lastDirection = 'up'
           moveCounter++
@@ -1646,7 +1664,7 @@ function init() {
       }
 
       function moveUpC() {
-        if (ghostIndex[0] - width >= 0 && !squares[ghostIndex[0] - width].classList.contains('wall') && !squares[ghostIndex[0] - width].classList.contains('ghostAny')) {
+        if (ghostIndex[0] - width >= 0 && !squares[ghostIndex[0] - width].classList.contains('wall') && !squares[ghostIndex[0] - width].classList.contains('ghostAny') && !squares[ghostIndex[0] - width].classList.contains('gate')) {
           ghostIndex[0] -= width
           ghostMoved()
         }
@@ -2049,7 +2067,7 @@ function init() {
       }
   
       function moveUp() {
-        if (pathfinderIndex[0] - width >= 0 && !squares[pathfinderIndex[0] - width].classList.contains('wall') && !squares[pathfinderIndex[0] - width].classList.contains('ghostAny')) {
+        if (pathfinderIndex[0] - width >= 0 && !squares[pathfinderIndex[0] - width].classList.contains('wall') && !squares[pathfinderIndex[0] - width].classList.contains('ghostAny')  && !squares[pathfinderIndex[0] - width].classList.contains('gate')) {
           pathfinderIndex[0] -= width
           lastDirection = 'up'
           moveCounter[0]++

@@ -25,7 +25,7 @@ div.grid-item {
   width: 40px;
   height: 40px;
   border: 1px dashed black;
-  background-color: white;
+  background-color: yellow;
 }
 
 div.grid-item.player {
@@ -37,6 +37,20 @@ div.grid-item.player {
 div.grid-item.wall {
   background-color: grey;
   color: white;
+}
+
+div.grid-item.wall.rightEdge {
+  border-right: 1px solid black;
+}
+
+div.grid-item.gate {
+  background-color: orange;
+  color: white;
+}
+
+div.grid-item.prison {
+  background-color: aqua;
+  color: black;
 }
 
 div.grid-item.bigCoin {
@@ -121,3 +135,4 @@ div.grid-item.scaredghost.ghostAny.ghostWhite {
   background-size: 100%;
   background-position: center;
 }
+
