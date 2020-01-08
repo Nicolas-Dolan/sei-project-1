@@ -466,6 +466,9 @@ function init() {
       squares.forEach((square) => {
         square.classList.remove('ghostWhite')
       })
+      squares.forEach((square) => {
+        square.classList.remove('statusGiven')
+      })
       ghostsFlee = false
       fleeEndSoon = false
       hobbled = false
@@ -530,6 +533,9 @@ function init() {
       })
       squares.forEach((square) => {
         square.classList.remove('ghostWhite')
+      })
+      squares.forEach((square) => {
+        square.classList.remove('statusGiven')
       })
       if (squares[playerIndex].classList.contains('ghost1')) {
         timerIdArray.forEach(element => clearInterval(element))
@@ -669,6 +675,9 @@ function init() {
         })
         squares.forEach((square) => {
           square.classList.remove('ghostWhite')
+        })
+        squares.forEach((square) => {
+          square.classList.remove('statusGiven')
         })
         cycleMoveType()
         console.log('ghosts flee=', ghostsFlee, 'flee end soon=', fleeEndSoon)
@@ -1281,6 +1290,7 @@ function init() {
             square.classList.remove('ghostWhite')
           }
         })
+        
         squares.forEach(square => square.classList.remove(ghost))
         squares[ghostIndex[0]].classList.add(ghost)
         squares[ghostIndex[0]].classList.add('ghostAny')
@@ -1686,9 +1696,23 @@ function init() {
             square.classList.remove('ghostAny')
           }
         })
+        squares.forEach((square) => {
+          if (square.classList.contains(ghost) && square.classList.contains('statusGiven')) {
+            square.classList.remove('statusGiven')
+          }
+        })
         squares.forEach(square => square.classList.remove(ghost))
         squares[ghostIndex[0]].classList.add(ghost)
         squares[ghostIndex[0]].classList.add('ghostAny')
+        if (tracked && ghost === 'ghost1') {
+          squares[ghostIndex[0]].classList.add('statusGiven')
+        }
+        if (confused && ghost === 'ghost2') {
+          squares[ghostIndex[0]].classList.add('statusGiven')
+        }
+        if (hobbled && ghost === 'ghost4') {
+          squares[ghostIndex[0]].classList.add('statusGiven')
+        }
         ghostMoved()
       }
 
@@ -1779,9 +1803,23 @@ function init() {
             square.classList.remove('ghostAny')
           }
         })
+        squares.forEach((square) => {
+          if (square.classList.contains(ghost) && square.classList.contains('statusGiven')) {
+            square.classList.remove('statusGiven')
+          }
+        })
         squares.forEach(square => square.classList.remove(ghost))
         squares[ghostIndex[0]].classList.add(ghost)
         squares[ghostIndex[0]].classList.add('ghostAny')
+        if (tracked && ghost === 'ghost1') {
+          squares[ghostIndex[0]].classList.add('statusGiven')
+        }
+        if (confused && ghost === 'ghost2') {
+          squares[ghostIndex[0]].classList.add('statusGiven')
+        }
+        if (hobbled && ghost === 'ghost4') {
+          squares[ghostIndex[0]].classList.add('statusGiven')
+        }
         ghostMoved()
         pathfinderIndex[0] = ghostIndex[0]
         // console.log('ghostindex =', ghostIndex)

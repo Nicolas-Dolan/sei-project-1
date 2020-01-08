@@ -121,6 +121,26 @@ div.grid-item.ghost4 {
   background-size: 100%;
   background-position: center;
 }
+div.grid-item.ghost1.statusGiven {
+  background-image: url('../assets/pacman.jpg');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+}
+
+div.grid-item.ghost2.statusGiven {
+  background-image: url('../assets/pacman.jpg');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+}
+
+div.grid-item.ghost4.statusGiven {
+  background-image: url('../assets/pacman.jpg');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+}
 
 div.grid-item.scaredghost.ghostAny {
   background-image: url('../assets/scaredghost.png');
