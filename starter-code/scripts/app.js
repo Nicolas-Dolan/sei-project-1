@@ -40,6 +40,9 @@ function init() {
     let fleeTime
     const fleeTimeArray = []
     let ghostEatCount = 0
+    let confused = false
+    let hobbled = false
+    let tracked = false
 
     gameActive = true
     console.log('Game active?', gameActive)
@@ -134,7 +137,7 @@ function init() {
       wallIndices.forEach((element) => squares[element].classList.add('wall'))
 
       addBigCoins()
-      addSmallCoins()
+      // addSmallCoins()
 
       // adds index number to each grid item
       squares.forEach((element, index) => element.innerHTML = index)
@@ -147,47 +150,88 @@ function init() {
     
 
     function handleKeyDown(e) {
-      const delay = 200
+      let delay = 200
+      if (hobbled) {
+        delay = 500
+      }
       function moveTimer() {
         moveable = false
         setTimeout(function() {
           moveable = true 
         }, delay)
       }
-      switch (e.keyCode) {
-        case 39:
-          if (moveable && playerIndex === 161) {
-            playerIndex = 144
-            moveTimer()
-          } else if (moveable && playerIndex % width < width - 1 && !squares[playerIndex + 1].classList.contains('wall')) {
-            playerIndex++
-            moveTimer()
-          }
-          break
-        case 37:
-          if (moveable && playerIndex === 144) {
-            playerIndex = 161
-            moveTimer()
-          } else if (moveable && playerIndex % width > 0 && !squares[playerIndex - 1].classList.contains('wall')) {
-            playerIndex--
-            moveTimer()
-          }
-          break
-        case 40:
-          if (moveable && playerIndex + width < width * width && !squares[playerIndex + width].classList.contains('wall')) {
-            playerIndex += width
-            moveTimer()
-          }
-          break
-        case 38:
-          if (moveable && playerIndex - width >= 0 && !squares[playerIndex - width].classList.contains('wall') && !squares[playerIndex - width].classList.contains('gate')) {
-            playerIndex -= width
-            moveTimer()
-          } 
-          break
-        default:
-          console.log('player shouldnt move')
+      if (!confused) {
+        switch (e.keyCode) {
+          case 39:
+            if (moveable && playerIndex === 161) {
+              playerIndex = 144
+              moveTimer()
+            } else if (moveable && playerIndex % width < width - 1 && !squares[playerIndex + 1].classList.contains('wall')) {
+              playerIndex++
+              moveTimer()
+            }
+            break
+          case 37:
+            if (moveable && playerIndex === 144) {
+              playerIndex = 161
+              moveTimer()
+            } else if (moveable && playerIndex % width > 0 && !squares[playerIndex - 1].classList.contains('wall')) {
+              playerIndex--
+              moveTimer()
+            }
+            break
+          case 40:
+            if (moveable && playerIndex + width < width * width && !squares[playerIndex + width].classList.contains('wall')) {
+              playerIndex += width
+              moveTimer()
+            }
+            break
+          case 38:
+            if (moveable && playerIndex - width >= 0 && !squares[playerIndex - width].classList.contains('wall') && !squares[playerIndex - width].classList.contains('gate')) {
+              playerIndex -= width
+              moveTimer()
+            } 
+            break
+          default:
+            console.log('player shouldnt move')
+        }
+      } else if (confused) {
+        switch (e.keyCode) {
+          case 37:
+            if (moveable && playerIndex === 161) {
+              playerIndex = 144
+              moveTimer()
+            } else if (moveable && playerIndex % width < width - 1 && !squares[playerIndex + 1].classList.contains('wall')) {
+              playerIndex++
+              moveTimer()
+            }
+            break
+          case 39:
+            if (moveable && playerIndex === 144) {
+              playerIndex = 161
+              moveTimer()
+            } else if (moveable && playerIndex % width > 0 && !squares[playerIndex - 1].classList.contains('wall')) {
+              playerIndex--
+              moveTimer()
+            }
+            break
+          case 38:
+            if (moveable && playerIndex + width < width * width && !squares[playerIndex + width].classList.contains('wall')) {
+              playerIndex += width
+              moveTimer()
+            }
+            break
+          case 40:
+            if (moveable && playerIndex - width >= 0 && !squares[playerIndex - width].classList.contains('wall') && !squares[playerIndex - width].classList.contains('gate')) {
+              playerIndex -= width
+              moveTimer()
+            } 
+            break
+          default:
+            console.log('player shouldnt move')
+        }
       }
+      
       squares.forEach(square => square.classList.remove('player'))
       squares[playerIndex].classList.add('player')
       playerMoved()
@@ -413,38 +457,144 @@ function init() {
       squares.forEach(square => square.classList.remove('ghost3'))
       squares.forEach(square => square.classList.remove('ghost4'))
       squares.forEach(square => square.classList.remove('ghostAny'))
+      squares.forEach((square) => {
+        square.classList.remove('scaredghost')
+      })
+      squares.forEach((square) => {
+        square.classList.remove('ghostWhite')
+      })
+      ghostsFlee = false
+      fleeEndSoon = false
+      hobbled = false
+      confused = false
+      tracked = false
+      ghostEatCount = 0
     }
 
     function checkGhost() {
-      if (squares[playerIndex].classList.contains('ghostAny') && ghostsFlee === false) {
+      if (squares[playerIndex].classList.contains('ghost3') && ghostsFlee === false) {
         gameOver()
       } else if (squares[playerIndex].classList.contains('ghostAny') && ghostsFlee === true) {
         eatGhost()
+      } else if (squares[playerIndex].classList.contains('ghost4') && ghostsFlee === false && hobbled === false) {
+        hobbled = true
+        statusGiven()
+        console.log('hobbled =', hobbled)
+      } else if (squares[playerIndex].classList.contains('ghost4') && ghostsFlee === false && hobbled === true) {
+        losePoints(100)
+        statusGiven()
+      } else if (squares[playerIndex].classList.contains('ghost2') && ghostsFlee === false && confused === false) {
+        confused = true
+        console.log('confused =', confused)
+        statusGiven()
+      } else if (squares[playerIndex].classList.contains('ghost2') && ghostsFlee === false && confused === true) {
+        losePoints(100)
+        statusGiven()
+      } else if (squares[playerIndex].classList.contains('ghost1') && ghostsFlee === false && tracked === false) {
+        trackPlayer()
+        statusGiven()
+        console.log('tracked =', tracked)
+      } else if (squares[playerIndex].classList.contains('ghost1') && ghostsFlee === false && tracked === true) {
+        losePoints(100)
+        statusGiven()
       }
     }
+
+    function trackPlayer() {
+      tracked = true
+      chasePlayer(ghost3Index, 'ghost3', pathfinder3Index, playerIndex)
+
+    }
+
+    function losePoints(amount) {
+      score -= amount
+      scoreViewer.innerHTML = score
+    }
+
+    function statusGiven() {
+      squares.forEach((square) => {
+        square.classList.remove('scaredghost')
+      })
+      squares.forEach((square) => {
+        square.classList.remove('ghostWhite')
+      })
+      if (squares[playerIndex].classList.contains('ghost1')) {
+        timerIdArray.forEach(element => clearInterval(element))
+        squares[playerIndex].classList.remove('ghost1')
+        squares[playerIndex].classList.remove('ghostAny')
+        ghost1Index = [115]
+        squares[ghost1Index[0]].classList.add('ghostAny')
+        squares[ghost1Index[0]].classList.add('ghost1')
+        cycleMoveType()
+      }
+      if (squares[playerIndex].classList.contains('ghost2')) {
+        timerIdArray.forEach(element => clearInterval(element))
+        squares[playerIndex].classList.remove('ghost2')
+        squares[playerIndex].classList.remove('ghostAny')
+        ghost2Index = [116]
+        squares[ghost2Index[0]].classList.add('ghostAny')
+        squares[ghost2Index[0]].classList.add('ghost2')
+        cycleMoveType()
+      }
+      if (squares[playerIndex].classList.contains('ghost4')) {
+        timerIdArray.forEach(element => clearInterval(element))
+        squares[playerIndex].classList.remove('ghost4')
+        squares[playerIndex].classList.remove('ghostAny')
+        ghost4Index = [118]
+        squares[ghost4Index[0]].classList.add('ghostAny')
+        squares[ghost4Index[0]].classList.add('ghost4')
+        cycleMoveType()
+      }
+    }
+    
 
     function ghostMoveAll() {
       timerIdArray.forEach(element => clearInterval(element))
       ghostMove(ghost1Index, 'ghost1')
       ghostMove(ghost2Index, 'ghost2')
-      ghostMove(ghost3Index, 'ghost3')
       ghostMove(ghost4Index, 'ghost4')
+
+      if (tracked) {
+        chasePlayer(ghost3Index, 'ghost3', pathfinder3Index, playerIndex)
+        console.log('Blue is chasing') 
+      } else ghostMove(ghost3Index, 'ghost3')
     }
 
     function ghostChase1() {
       timerIdArray.forEach(element => clearInterval(element))
       ghostMove(ghost1Index, 'ghost1')
-      ghostMove(ghost2Index, 'ghost2')
-      ghostMove(ghost3Index, 'ghost3')
-      chasePlayer(ghost4Index, 'ghost4', pathfinder4Index, playerIndex)
+
+      if (hobbled) {
+        chasePlayer(ghost2Index, 'ghost2', pathfinder2Index, playerIndex)
+        console.log('Orange is chasing') 
+      } else ghostMove(ghost2Index, 'ghost2')
+
+      if (hobbled) {
+        ghostMove(ghost4Index, 'ghost4')
+      } else chasePlayer(ghost4Index, 'ghost4', pathfinder4Index, playerIndex)
+      console.log('Pink is chasing')
+
+      if (tracked) {
+        chasePlayer(ghost3Index, 'ghost3', pathfinder3Index, playerIndex)
+        console.log('Blue is chasing') 
+      } else ghostMove(ghost3Index, 'ghost3')
     }
 
     function ghostChase2() {
       timerIdArray.forEach(element => clearInterval(element))
       ghostMove(ghost2Index, 'ghost2')
-      ghostMove(ghost3Index, 'ghost3')
-      chasePlayer(ghost1Index, 'ghost1', pathfinder1Index, playerIndex)
       chasePlayer(ghost4Index, 'ghost4', pathfinder4Index, playerIndex)
+      console.log('Pink is chasing') 
+
+      if (tracked) {
+        ghostMove(ghost1Index, 'ghost1')
+      } else chasePlayer(ghost1Index, 'ghost1', pathfinder1Index, playerIndex)
+      console.log('Red is chasing')
+
+      if (tracked) {
+        chasePlayer(ghost3Index, 'ghost3', pathfinder3Index, playerIndex)
+        console.log('Blue is chasing')
+      } else ghostMove(ghost3Index, 'ghost3')
     }
 
     
@@ -452,19 +602,19 @@ function init() {
     function cycleMoveType() {
       firstChase = setTimeout(function(){ 
         ghostChase1()
-        console.log('Pink is chasing') 
+        // console.log('Pink is chasing') 
         firstReprieve = setTimeout(function(){ 
           ghostMoveAll()
           console.log('First reprieve') 
           secondChase = setTimeout(function(){ 
             ghostChase2()
-            console.log('Pink and Red are chasing')
+            // console.log('Pink and Red are chasing')
             secondReprieve = setTimeout(function(){ 
               ghostMoveAll()
               console.log('Second reprieve') 
               finalChase = setTimeout(function(){ 
                 ghostChase2()
-                console.log('Pink and Red are chasing again') 
+                // console.log('Pink and Red are chasing again') 
               }, (15000 / round))
               cycleMoveArray.push(finalChase)
             }, 20000)  
