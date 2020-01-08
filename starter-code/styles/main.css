@@ -34,6 +34,12 @@ div.grid-item.player {
   background-size: contain;
 }
 
+div.grid-item.player.sword {
+  background-image: url('../assets/killerpacman.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
 div.grid-item.wall {
   background-color: grey;
   color: white;
@@ -151,6 +157,13 @@ div.grid-item.ghost2.statusGiven {
 
 div.grid-item.ghost4.statusGiven {
   background-image: url('../assets/pacman.jpg');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+}
+
+div.grid-item.ghost3.hunting {
+  background-image: url('../assets/killerghost.jpg');
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: center;

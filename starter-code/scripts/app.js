@@ -249,6 +249,10 @@ function init() {
       }
       
       squares.forEach(square => square.classList.remove('player'))
+      squares.forEach(square => square.classList.remove('sword'))
+      if (ghostsFlee){
+        squares[playerIndex].classList.add('sword')
+      }
       squares[playerIndex].classList.add('player')
       // playerMoved()
     // console.log('current player index is' , playerIndex)
@@ -392,6 +396,9 @@ function init() {
       hobbledStat.style.display = 'none'
       confusedStat.style.display = 'none'
       trackedStat.style.display = 'none'
+      squares.forEach((square) => {
+        square.classList.remove('hunting')
+      })
     }
 
     function playerMoved() {
@@ -556,6 +563,12 @@ function init() {
       squares.forEach((square) => {
         square.classList.remove('potion')
       })
+      squares.forEach((square) => {
+        square.classList.remove('hunting')
+      })
+      squares.forEach((square) => {
+        square.classList.remove('sword')
+      })
       ghostsFlee = false
       fleeEndSoon = false
       hobbled = false
@@ -623,6 +636,9 @@ function init() {
       })
       squares.forEach((square) => {
         square.classList.remove('statusGiven')
+      })
+      squares.forEach((square) => {
+        square.classList.remove('hunting')
       })
       if (squares[playerIndex].classList.contains('ghost1')) {
         timerIdArray.forEach(element => clearInterval(element))
@@ -768,6 +784,9 @@ function init() {
         })
         squares.forEach((square) => {
           square.classList.remove('statusGiven')
+        })
+        squares.forEach((square) => {
+          square.classList.remove('hunting')
         })
         cycleMoveType()
         console.log('ghosts flee=', ghostsFlee, 'flee end soon=', fleeEndSoon)
@@ -1803,6 +1822,9 @@ function init() {
         if (hobbled && ghost === 'ghost4') {
           squares[ghostIndex[0]].classList.add('statusGiven')
         }
+        if (tracked && ghost === 'ghost3') {
+          squares[ghostIndex[0]].classList.add('hunting')
+        }
         ghostMoved()
       }
 
@@ -1909,6 +1931,9 @@ function init() {
         }
         if (hobbled && ghost === 'ghost4') {
           squares[ghostIndex[0]].classList.add('statusGiven')
+        }
+        if (tracked && ghost === 'ghost3') {
+          squares[ghostIndex[0]].classList.add('hunting')
         }
         ghostMoved()
         pathfinderIndex[0] = ghostIndex[0]
