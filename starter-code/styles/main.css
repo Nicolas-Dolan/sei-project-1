@@ -136,3 +136,6 @@ div.grid-item.scaredghost.ghostAny.ghostWhite {
   background-position: center;
 }
 
+div.hobbled, div.confused, div.tracked {
+  display: none;
+}

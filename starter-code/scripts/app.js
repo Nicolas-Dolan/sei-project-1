@@ -65,6 +65,10 @@ function init() {
     const myStorage = window.localStorage
     const scores = document.querySelector('.scores')
     const ghost1pic = document.querySelector('.ghost1')
+    const healthyStat = document.querySelector('.healthy')
+    const hobbledStat = document.querySelector('.hobbled')
+    const confusedStat = document.querySelector('.confused')
+    const trackedStat = document.querySelector('.tracked')
     
     // console.log(ghost1pic)
   
@@ -380,14 +384,14 @@ function init() {
     }
 
     function gameOver() {
+      removeGhosts()
+      squares[playerIndex].classList.remove('player')
+      gameActive = false
       game.style.display = 'none'
       gameOverScrn.style.display = 'flex'
       const scoreViewer2 = document.querySelector('body > div.gameOverScrn > p > span')
       scoreViewer2.innerHTML = score
-      gameActive = false
       generateLeaderBd()
-      removeGhosts()
-      squares[playerIndex].classList.remove('player')
     }
 
     function playAgain() {
@@ -438,7 +442,6 @@ function init() {
       ghost4Index = [118]
       squares[ghost4Index[0]].classList.add('ghostAny')
       squares[ghost4Index[0]].classList.add('ghost4')
-      ghostMoveAll()
       cycleMoveType()
     }
     
@@ -469,6 +472,10 @@ function init() {
       confused = false
       tracked = false
       ghostEatCount = 0
+      healthyStat.style.display = 'block'
+      hobbledStat.style.display = 'none'
+      confusedStat.style.display = 'none'
+      trackedStat.style.display = 'none'
     }
 
     function checkGhost() {
@@ -478,6 +485,8 @@ function init() {
         eatGhost()
       } else if (squares[playerIndex].classList.contains('ghost4') && ghostsFlee === false && hobbled === false) {
         hobbled = true
+        healthyStat.style.display = 'none'
+        hobbledStat.style.display = 'block'
         statusGiven()
         console.log('hobbled =', hobbled)
       } else if (squares[playerIndex].classList.contains('ghost4') && ghostsFlee === false && hobbled === true) {
@@ -485,6 +494,8 @@ function init() {
         statusGiven()
       } else if (squares[playerIndex].classList.contains('ghost2') && ghostsFlee === false && confused === false) {
         confused = true
+        healthyStat.style.display = 'none'
+        confusedStat.style.display = 'block'
         console.log('confused =', confused)
         statusGiven()
       } else if (squares[playerIndex].classList.contains('ghost2') && ghostsFlee === false && confused === true) {
@@ -494,6 +505,8 @@ function init() {
         trackPlayer()
         statusGiven()
         console.log('tracked =', tracked)
+        healthyStat.style.display = 'none'
+        trackedStat.style.display = 'block'
       } else if (squares[playerIndex].classList.contains('ghost1') && ghostsFlee === false && tracked === true) {
         losePoints(100)
         statusGiven()
@@ -600,6 +613,7 @@ function init() {
     
 
     function cycleMoveType() {
+      ghostMoveAll()
       firstChase = setTimeout(function(){ 
         ghostChase1()
         // console.log('Pink is chasing') 
@@ -656,22 +670,12 @@ function init() {
         squares.forEach((square) => {
           square.classList.remove('ghostWhite')
         })
-        ghostMoveAll()
         cycleMoveType()
         console.log('ghosts flee=', ghostsFlee, 'flee end soon=', fleeEndSoon)
       }, (7000 - (round * 50)))
       fleeTimeArray.push(fleeTime)
     }
 
-    function ghostsScared() {
-      if (ghostsFlee) {
-        document.querySelector('.ghost1').style.backgroundImage = 'url(assets/scaredghost.png)'
-        document.querySelector('.ghost2').style.backgroundImage = 'url(assets/scaredghost.png)'
-        document.querySelector('.ghost3').style.backgroundImage = 'url(assets/scaredghost.png)'
-        document.querySelector('.ghost4').style.backgroundImage = 'url(assets/scaredghost.png)'
-      }
-      
-    }
 
     function eatGhost() {
       if (squares[playerIndex].classList.contains('ghost1')) {
