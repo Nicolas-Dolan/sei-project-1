@@ -53,7 +53,7 @@ function init() {
     // const gridItems = document.querySelectorAll('.grid-item')
     const squares = []
     const wallIndices = []
-    let bigCoinsIndices = [21, 78, 80, 82]
+    let bigCoinsIndices = [34, 289, 304]
     const scoreViewer = document.querySelector('.score')
     const roundViewer = document.querySelector('.round')
     const resetBtn = document.querySelector('.reset')
@@ -101,6 +101,28 @@ function init() {
       squares[116].classList.add('prison')
       squares[117].classList.add('prison')
       squares[118].classList.add('prison')
+      squares[96].classList.add('keep')
+      squares[97].classList.add('keep')
+      squares[98].classList.add('keep')
+      squares[99].classList.add('keep')
+      squares[100].classList.add('keep')
+      squares[101].classList.add('keep')
+      squares[114].classList.add('keep')
+      squares[119].classList.add('keep')
+      squares[132].classList.add('keep')
+      squares[134].classList.add('keep')
+      squares[135].classList.add('keep')
+      squares[137].classList.add('keep')
+      squares[96].classList.add('topleft')
+      squares[101].classList.add('topright')
+      squares[132].classList.add('bottomleft')
+      squares[137].classList.add('bottomright')
+      const plank1 = document.createElement('div')
+      plank1.classList.add('plank')
+      squares[133].appendChild(plank1)
+      const plank2 = document.createElement('div')
+      plank2.classList.add('plank')
+      squares[136].appendChild(plank2)
 
       addPerimeterWalls()
       drawBlock(92, 105)
@@ -141,10 +163,10 @@ function init() {
       wallIndices.forEach((element) => squares[element].classList.add('wall'))
 
       addBigCoins()
-      // addSmallCoins()
+      addSmallCoins()
 
       // adds index number to each grid item
-      squares.forEach((element, index) => element.innerHTML = index)
+      // squares.forEach((element, index) => element.innerHTML = index)
 
       addWallEdges()
 
@@ -392,7 +414,7 @@ function init() {
       tracked = false
       confused = false
       hobbled = false
-      healthyStat.style.display = 'block'
+      healthyStat.style.display = 'flex'
       hobbledStat.style.display = 'none'
       confusedStat.style.display = 'none'
       trackedStat.style.display = 'none'
@@ -408,12 +430,12 @@ function init() {
       eatPotion()
       checkCoins()
       checkGhost()
-      const randomN1 = Math.floor(Math.random() * (100 - 1 + 1)) + 1
+      const randomN1 = Math.floor(Math.random() * (200 - 1 + 1)) + 1
       if (randomN1 === 50) {
         generateTreasure()
       }
       if (tracked || confused || hobbled) {
-        const randomN2 = Math.floor(Math.random() * (20 - 1 + 1)) + 1
+        const randomN2 = Math.floor(Math.random() * (40 - 1 + 1)) + 1
         if (randomN2 === 10) {
           generatePotion()
         }
@@ -446,7 +468,7 @@ function init() {
 
     function nextRound() {
       resetPlayer()
-      bigCoinsIndices = [84, 86]
+      bigCoinsIndices = [34, 289, 304]
       round++
       roundViewer.innerHTML = round
       console.log('round', round)
@@ -458,7 +480,7 @@ function init() {
 
     function reset() {
       resetPlayer()
-      bigCoinsIndices = [78, 80, 82]
+      bigCoinsIndices = [34, 289, 304]
       removeGhosts()
       addGhosts()
       addBigCoins()
@@ -477,7 +499,7 @@ function init() {
       gameActive = false
       game.style.display = 'none'
       gameOverScrn.style.display = 'flex'
-      const scoreViewer2 = document.querySelector('body > div.gameOverScrn > p > span')
+      const scoreViewer2 = document.querySelector('body > div.gameOverScrn >div.gameOverWrapper > p > span')
       scoreViewer2.innerHTML = score
       generateLeaderBd()
     }
@@ -575,7 +597,7 @@ function init() {
       confused = false
       tracked = false
       ghostEatCount = 0
-      healthyStat.style.display = 'block'
+      healthyStat.style.display = 'flex'
       hobbledStat.style.display = 'none'
       confusedStat.style.display = 'none'
       trackedStat.style.display = 'none'
@@ -589,7 +611,7 @@ function init() {
       } else if (squares[playerIndex].classList.contains('ghost4') && ghostsFlee === false && hobbled === false) {
         hobbled = true
         healthyStat.style.display = 'none'
-        hobbledStat.style.display = 'block'
+        hobbledStat.style.display = 'flex'
         statusGiven()
         console.log('hobbled =', hobbled)
       } else if (squares[playerIndex].classList.contains('ghost4') && ghostsFlee === false && hobbled === true) {
@@ -598,7 +620,7 @@ function init() {
       } else if (squares[playerIndex].classList.contains('ghost2') && ghostsFlee === false && confused === false) {
         confused = true
         healthyStat.style.display = 'none'
-        confusedStat.style.display = 'block'
+        confusedStat.style.display = 'flex'
         console.log('confused =', confused)
         statusGiven()
       } else if (squares[playerIndex].classList.contains('ghost2') && ghostsFlee === false && confused === true) {
@@ -609,7 +631,7 @@ function init() {
         statusGiven()
         console.log('tracked =', tracked)
         healthyStat.style.display = 'none'
-        trackedStat.style.display = 'block'
+        trackedStat.style.display = 'flex'
       } else if (squares[playerIndex].classList.contains('ghost1') && ghostsFlee === false && tracked === true) {
         losePoints(100)
         statusGiven()
@@ -681,7 +703,7 @@ function init() {
 
       if (tracked) {
         chasePlayer(ghost3Index, 'ghost3', pathfinder3Index, playerIndex)
-        console.log('Blue is chasing') 
+        console.log('Ogre is chasing') 
       } else ghostMove(ghost3Index, 'ghost3')
     }
 
@@ -691,17 +713,17 @@ function init() {
 
       if (hobbled) {
         chasePlayer(ghost2Index, 'ghost2', pathfinder2Index, playerIndex)
-        console.log('Orange is chasing') 
+        console.log('Blue is chasing') 
       } else ghostMove(ghost2Index, 'ghost2')
 
       if (hobbled) {
         ghostMove(ghost4Index, 'ghost4')
       } else chasePlayer(ghost4Index, 'ghost4', pathfinder4Index, playerIndex)
-      console.log('Pink is chasing')
+      console.log('Red is chasing')
 
       if (tracked) {
         chasePlayer(ghost3Index, 'ghost3', pathfinder3Index, playerIndex)
-        console.log('Blue is chasing') 
+        console.log('Ogre is chasing') 
       } else ghostMove(ghost3Index, 'ghost3')
     }
 
@@ -709,16 +731,16 @@ function init() {
       timerIdArray.forEach(element => clearInterval(element))
       ghostMove(ghost2Index, 'ghost2')
       chasePlayer(ghost4Index, 'ghost4', pathfinder4Index, playerIndex)
-      console.log('Pink is chasing') 
+      console.log('Red is chasing') 
 
       if (tracked) {
         ghostMove(ghost1Index, 'ghost1')
       } else chasePlayer(ghost1Index, 'ghost1', pathfinder1Index, playerIndex)
-      console.log('Red is chasing')
+      console.log('Green is chasing')
 
       if (tracked) {
         chasePlayer(ghost3Index, 'ghost3', pathfinder3Index, playerIndex)
-        console.log('Blue is chasing')
+        console.log('Ogre is chasing')
       } else ghostMove(ghost3Index, 'ghost3')
     }
 
@@ -743,11 +765,11 @@ function init() {
                 // console.log('Pink and Red are chasing again') 
               }, (15000 / round))
               cycleMoveArray.push(finalChase)
-            }, 20000)  
+            }, 25000)  
             cycleMoveArray.push(secondReprieve)
           }, (15000 / round))
           cycleMoveArray.push(secondChase)
-        }, 20000)
+        }, 25000)
         cycleMoveArray.push(firstReprieve)
       }, (5000 / round))
       cycleMoveArray.push(firstChase)
@@ -1888,8 +1910,13 @@ function init() {
     
 
     function chasePlayer(ghostIndex, ghost, pathfinderIndex, destinationIndex) {
+      let timerDelay = 500
 
-      timerId = setInterval(pursuePlayer, 500)
+      if (tracked && ghost === 'ghost3') {
+        timerDelay = 350
+      }
+
+      timerId = setInterval(pursuePlayer, timerDelay)
 
       timerIdArray.push(timerId)
 

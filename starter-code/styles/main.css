@@ -6,6 +6,7 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100vh;
+  font-family: 'Montserrat Alternates', sans-serif;
 }
 
 body {
@@ -14,76 +15,126 @@ body {
   justify-content: center;
 }
 
+.bold {
+  font-weight: 900;
+  /* text-decoration: underline; */
+}
+
+aside {
+  background-color: yellow;
+  margin: 0 0 0 10px;
+  padding: 15px;
+  height: 720px;
+}
+
 div.grid {
   width: 720px;
   height: 720px;
   display: flex;
   flex-wrap: wrap;
+  background-image: url('../assets/grass2.jpg');
 }
 
 div.grid-item {
   width: 40px;
   height: 40px;
-  border: 1px dashed black;
-  background-color: yellow;
+  /* border: 1px dashed black; */
 }
 
 div.grid-item.player {
-  background-image: url('../assets/pacman2.png');
+  background-image: url('../assets/elf.png');
   background-repeat: no-repeat;
   background-size: contain;
-}
-
-div.grid-item.player.sword {
-  background-image: url('../assets/killerpacman.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-
-div.grid-item.wall {
-  background-color: grey;
-  color: white;
-}
-
-div.grid-item.wall.rightEdge {
-  border-right: 1px solid black;
-}
-
-div.grid-item.gate {
-  background-color: orange;
-  color: white;
-}
-
-div.grid-item.prison {
-  background-color: aqua;
-  color: black;
-}
-
-div.grid-item.bigCoin {
-  background-image: url('../assets/coin.png');
-  background-repeat: no-repeat;
-  background-size: 150%;
   background-position: center;
 }
 
-div.grid-item.smallCoin {
-  background-image: url('../assets/coin.png');
+div.grid-item.player.sword {
+  background-image: url('../assets/elfwithsword.png');
+  background-repeat: no-repeat;
+  background-size: 110%;
+  background-position: center;
+}
+
+div.grid-item.wall {
+  background-image: url('../assets/tree.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  color: white;
+}
+
+/* div.grid-item.wall.rightEdge {
+  border-right: 1px solid black;
+} */
+
+div.grid-item.gate {
+  /* background-color: rgb(71, 52, 17); */
+  background-color: black;
+  color: white;
+}
+
+div.plank {
+  background-color: red;
+  width: 40px;
+  height: 5px;
+  background-image: url('../assets/stonewall2.jpg');
+  background-size: 100%;
+  background-position: center;
+}
+
+div.grid-item.prison {
+  /* background-image: url('../assets/stonefloor.jpg'); */
+  background-color: black;
+  color: black;
+}
+
+div.grid-item.wall.keep {
+  background-color: grey;
+  background-image: url('../assets/stonewall2.jpg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  color: black;
+}
+
+div.grid-item.wall.keep.topleft {
+  border-radius: 15px 0 0 0; 
+}
+div.grid-item.wall.keep.topright {
+  border-radius: 0 15px 0 0; 
+}
+div.grid-item.wall.keep.bottomright {
+  border-radius: 0 0 15px 0; 
+}
+div.grid-item.wall.keep.bottomleft {
+  border-radius: 0 0 0 15px; 
+}
+
+div.grid-item.bigCoin {
+  background-image: url('../assets/sword3.png');
   background-repeat: no-repeat;
   background-size: 70%;
   background-position: center;
 }
 
-div.grid-item.treasure {
-  background-image: url('../assets/treasure.png');
+div.grid-item.smallCoin {
+  background-image: url('../assets/coin4.png');
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: 40%;
+  background-position: center;
+}
+
+div.grid-item.treasure {
+  background-image: url('../assets/treasure5.png');
+  background-repeat: no-repeat;
+  background-size: 130%;
   background-position: center;
 }
 
 div.grid-item.potion {
-  background-image: url('../assets/potion.jpg');
+  background-image: url('../assets/potionpurple.png');
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: 70%;
   background-position: center;
 }
 
@@ -92,26 +143,99 @@ div.startScrn {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  background-color: yellow;
+  height: 100%;
+  width: 100%;
 }
 
 div.game {
   display: none;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  background-color: aqua;
+  height: 100%;
+  width: 100%;
 }
+
+.statusbox {
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  flex-direction: column;
+}
+
+.healthy, div.confused, div.tracked, div.hobbled {
+  width: 200px;
+  height: 30px;
+  /* line-height: 30px; */
+  text-align: center;
+  /* vertical-align: middle; */
+  border: black 1px solid;
+  border-radius: 15px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+}
+
+div.confused {
+  background-color: blue;
+  color: white;
+}
+
+div.hobbled {
+  background-color: red;
+  color: white;
+}
+
+div.tracked {
+  background-color: green;
+  color: white;
+}
+
+/* div.gameOverScrn {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: purple;
+  width: 400px;
+}
+
+div.gameOverWrapper {
+  height: 100px;
+  width: 100px;
+  background-color: peru;
+} */
 
 div.gameOverScrn {
   display: none;
+  width: 100%;
+  height: 100%;
+  background-color: aqua;
+  justify-content: center;
+  align-items: center;
+}
+
+div.gameOverWrapper {
+  display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  background-color: yellow;
+  width: 350px;
+  padding: 15px;
 }
 
 div.scoreboard {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 div.scores1, div.scores2, div.scores3, div.scores4, div.scores5 {
   display: flex;
   justify-content: space-between;
+  /* margin: 0 15px; */
 }
 
 div.grid-item.ghost1 {
@@ -124,7 +248,7 @@ div.grid-item.ghost1 {
 div.grid-item.ghost2 {
   background-image: url('../assets/goblinblue.png');
   background-repeat: no-repeat;
-  background-size: 130%;
+  background-size: 100%;
   background-position: center;
 }
 
@@ -163,7 +287,7 @@ div.grid-item.ghost4.statusGiven {
 }
 
 div.grid-item.ghost3.hunting {
-  background-image: url('../assets/killerghost.jpg');
+  background-image: url('../assets/ogrepink.png');
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: center;
@@ -197,6 +321,60 @@ div.grid-item.scaredghost.ghostAny.ghostWhite.ghost3 {
   background-position: center;
 }
 
+
 div.hobbled, div.confused, div.tracked {
   display: none;
+}
+
+.playAgain {
+  margin: 15px 0 0 0;
+}
+
+.reset {
+  margin: 15px 0 0 0;
+}
+
+.endGame {
+  margin: 15px 0 0 0;
+}
+
+.enemies {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  height: 720px;
+  width: 250px;
+  background-color: yellow;
+  margin: 0 10px 0 0;
+}
+
+.profile {
+  height: 130px;
+  width: 240px;
+  background-color: aqua;
+  display: flex;
+}
+
+.portrait {
+  height: 130px;
+  width: 130px;
+  background-color: white;
+}
+
+.portrait > img {
+  max-height: 130px;
+}
+
+.charName {
+  height: 130px;
+  width: 110px;
+  font-size: 12.5px;
+  background-color: white;
+  padding: 5px;
+}
+
+div.charName > h3 {
+  margin: 0;
+  font-weight: 900;
 }

@@ -6,21 +6,33 @@
     <script type="text/javascript" src="scripts/app.js"></script>
     <link rel="stylesheet" href="styles/normalize.css">
     <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat+Alternates&display=swap" rel="stylesheet">
   </head>
   <body>
+
     <div class="startScrn">
-      <h1>Pac-Man</h1>
+      <h1>Let's get some Goblin Gold!</h1>
       <button class="start">Start Game</button>
     </div>
+
   <div class="game">
+    <div class="enemies">
+      <div class="profile"><div class="portrait"><img src="assets/ogrepurple.png" alt="Goblin King"></div><div class="charName"><h3>Goblin King</h3><p>If he catches you it's game over!</p></div></div>
+      <div class="profile"><div class="portrait"><img src="assets/goblinred.png" alt="Goblin King"></div><div class="charName"><h3>Hobbler</h3><p>He'll hobble you if he catches you, slowing you down</p></div></div>
+      <div class="profile"><div class="portrait"><img src="assets/goblinblue.png" alt="Goblin King"></div><div class="charName"><h3>Fuddler</h3><p>He'll confuse you if he catches you, inverting your controls</p></div></div>
+      <div class="profile"><div class="portrait"><img src="assets/goblingreen.png" alt="Goblin King"></div><div class="charName"><h3>Snitcher</h3><p>He'll put a tracker on you if he catches you, allowing the Goblin King to find you</p></div></div>
+      <div class="profile"><div class="portrait"><img src="assets/goblinyellow.png" alt="Goblin King"></div><div class="charName"><h3>Swiper</h3><p>He'll swipe some of your gold if he catches you, lowering your score</p></div></div>
+    </div>
   <div class="grid"></div>
   <aside>
-    <h1>Pac-Man</h1>
-    <p>Score: <span class="score"></span></p>
-    <p>Round: <span class="round"></span></p>
+    <h1>Goblin Gold</h1>
+    <p><span class="bold">Score:</span> <span class="score"></span></p>
+    <p><span class="bold">Round:</span> <span class="round"></span></p>
     <h2>Rules</h2>
-    <p>Small coin: 10 points</p>
-    <p>Big coin: 50 points</p>
+    <p>Coin: 10 points</p>
+    <p>Sword: 50 points</p>
+    <p>Potion: 200 points + cure status</p>
+    <p>Treasure: 1000 points</p>
     <h2>Status</h2>
     <div class="statusbox">
       <div class="healthy"><p>Healthy</p></div>
@@ -32,8 +44,10 @@
     <button class="endGame">End Game</button>
   </aside>
   </div>
+  
   <div class="gameOverScrn">
-    <h1>Game Over!</h1>
+    <div class="gameOverWrapper">
+      <h1>Game Over!</h1>
     <p>Your score: <span class="score"></span></p>
     <form id="username">
       <p>Enter your name below to be added to the leaderboard</p>
@@ -51,6 +65,9 @@
       </div>
     </section>
     <button class="playAgain">Play Again?</button>
+    </div>
+      
   </div>
+
   </body>
 </html>
