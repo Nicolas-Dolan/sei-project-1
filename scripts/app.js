@@ -53,7 +53,7 @@ function init() {
     // const gridItems = document.querySelectorAll('.grid-item')
     const squares = []
     const wallIndices = []
-    let bigCoinsIndices = [85, 203, 264]
+    let bigCoinsIndices = [85, 256]
     const scoreViewer = document.querySelector('.score')
     const roundViewer = document.querySelector('.round')
     const resetBtn = document.querySelector('.reset')
@@ -123,6 +123,12 @@ function init() {
       const plank2 = document.createElement('div')
       plank2.classList.add('plank')
       squares[136].appendChild(plank2)
+      // const arch1 = document.createElement('div')
+      // arch1.classList.add('archLeft')
+      // squares[133].appendChild(arch1)
+      // const arch2 = document.createElement('div')
+      // arch2.classList.add('archRight')
+      // squares[133].appendChild(arch2)
 
       addPerimeterWalls()
       drawBlock(92, 105)
@@ -468,7 +474,7 @@ function init() {
 
     function nextRound() {
       resetPlayer()
-      bigCoinsIndices = [85, 203, 264]
+      bigCoinsIndices = [85, 256]
       round++
       roundViewer.innerHTML = round
       console.log('round', round)
@@ -480,7 +486,7 @@ function init() {
 
     function reset() {
       resetPlayer()
-      bigCoinsIndices = [85, 203, 264]
+      bigCoinsIndices = [85, 256]
       removeGhosts()
       addGhosts()
       addBigCoins()
@@ -775,7 +781,7 @@ function init() {
           cycleMoveArray.push(secondChase)
         }, 25000)
         cycleMoveArray.push(firstReprieve)
-      }, (5000 / round))
+      }, (3000 / round))
       cycleMoveArray.push(firstChase)
     }
 

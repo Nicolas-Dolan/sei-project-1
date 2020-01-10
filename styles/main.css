@@ -32,6 +32,15 @@ aside {
   border-radius: 25px;
   /* background-image: url('../assets/stonetexture.jpg'); */
   background-image: radial-gradient(yellow, orange);
+  /* display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; */
+}
+
+div.buttons {
+  display: flex;
+  justify-content: center;
 }
 
 div.grid {
@@ -79,6 +88,9 @@ div.grid-item.gate {
   /* background-color: rgb(71, 52, 17); */
   background-color: black;
   color: white;
+  /* display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; */
 }
 
 div.plank {
@@ -88,6 +100,23 @@ div.plank {
   background-image: url('../assets/stonewall2.jpg');
   background-size: 100%;
   background-position: center;
+  margin: 0;
+}
+
+div.archLeft {
+  width: 0;
+      height: 0;
+      border-top: 10px solid grey;
+      border-right: 10px solid transparent;
+      margin: 0;
+}
+
+div.archRight {
+  width: 0;
+      height: 0;
+      border-top: 10px solid grey;
+      border-left: 10px solid transparent;
+      margin: 0;
 }
 
 div.grid-item.prison {
@@ -165,12 +194,13 @@ div.game {
   height: 100%;
   width: 100%;
   /* background-image: radial-gradient(aqua 85%, rgb(0, 174, 255)); */
+  background-image: url('../assets/sky.jpg');
 }
 
 .statusbox {
   display: flex;
   justify-content: center;
-  /* align-items: center; */
+  align-items: center;
   flex-direction: column;
 }
 
@@ -225,6 +255,7 @@ div.gameOverScrn {
   background-color: aqua;
   justify-content: center;
   align-items: center;
+  background-image: url('../assets/sky.jpg');
   /* background-image: radial-gradient(aqua 70%, rgb(0, 174, 255)); */
 }
 
@@ -344,11 +375,11 @@ div.hobbled, div.confused, div.tracked {
 }
 
 .reset {
-  margin: 15px 0 0 0;
+  margin: 15px 5px 0 0;
 }
 
 .endGame {
-  margin: 15px 0 0 0;
+  margin: 15px 0 0 5px;
 }
 
 .enemies {
