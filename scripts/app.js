@@ -441,7 +441,7 @@ function init() {
         generateTreasure()
       }
       if (tracked || confused || hobbled) {
-        const randomN2 = Math.floor(Math.random() * (60 - 1 + 1)) + 1
+        const randomN2 = Math.floor(Math.random() * (40 - 1 + 1)) + 1
         if (randomN2 === 10) {
           generatePotion()
         }
