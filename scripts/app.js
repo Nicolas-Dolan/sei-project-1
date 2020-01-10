@@ -53,7 +53,7 @@ function init() {
     // const gridItems = document.querySelectorAll('.grid-item')
     const squares = []
     const wallIndices = []
-    let bigCoinsIndices = [34, 289, 304]
+    let bigCoinsIndices = [85, 203, 264]
     const scoreViewer = document.querySelector('.score')
     const roundViewer = document.querySelector('.round')
     const resetBtn = document.querySelector('.reset')
@@ -405,7 +405,7 @@ function init() {
     function eatPotion() {
       if (squares[playerIndex].classList.contains('potion')) {
         squares[playerIndex].classList.remove('potion')
-        gainPoints(200)
+        gainPoints(50)
         potionHeal()
       }
     }
@@ -430,12 +430,12 @@ function init() {
       eatPotion()
       checkCoins()
       checkGhost()
-      const randomN1 = Math.floor(Math.random() * (200 - 1 + 1)) + 1
+      const randomN1 = Math.floor(Math.random() * (250 - 1 + 1)) + 1
       if (randomN1 === 50) {
         generateTreasure()
       }
       if (tracked || confused || hobbled) {
-        const randomN2 = Math.floor(Math.random() * (40 - 1 + 1)) + 1
+        const randomN2 = Math.floor(Math.random() * (60 - 1 + 1)) + 1
         if (randomN2 === 10) {
           generatePotion()
         }
@@ -468,7 +468,7 @@ function init() {
 
     function nextRound() {
       resetPlayer()
-      bigCoinsIndices = [34, 289, 304]
+      bigCoinsIndices = [85, 203, 264]
       round++
       roundViewer.innerHTML = round
       console.log('round', round)
@@ -480,7 +480,7 @@ function init() {
 
     function reset() {
       resetPlayer()
-      bigCoinsIndices = [34, 289, 304]
+      bigCoinsIndices = [85, 203, 264]
       removeGhosts()
       addGhosts()
       addBigCoins()
@@ -709,7 +709,6 @@ function init() {
 
     function ghostChase1() {
       timerIdArray.forEach(element => clearInterval(element))
-      ghostMove(ghost1Index, 'ghost1')
 
       if (hobbled) {
         chasePlayer(ghost2Index, 'ghost2', pathfinder2Index, playerIndex)
@@ -719,12 +718,17 @@ function init() {
       if (hobbled) {
         ghostMove(ghost4Index, 'ghost4')
       } else chasePlayer(ghost4Index, 'ghost4', pathfinder4Index, playerIndex)
-      console.log('Red is chasing')
+      // console.log('Red is chasing')
 
       if (tracked) {
         chasePlayer(ghost3Index, 'ghost3', pathfinder3Index, playerIndex)
         console.log('Ogre is chasing') 
       } else ghostMove(ghost3Index, 'ghost3')
+
+      if (tracked) {
+        ghostMove(ghost1Index, 'ghost1') 
+      } else chasePlayer(ghost1Index, 'ghost1', pathfinder1Index, playerIndex)
+      // console.log('Green is chasing')
     }
 
     function ghostChase2() {
@@ -736,7 +740,7 @@ function init() {
       if (tracked) {
         ghostMove(ghost1Index, 'ghost1')
       } else chasePlayer(ghost1Index, 'ghost1', pathfinder1Index, playerIndex)
-      console.log('Green is chasing')
+      // console.log('Green is chasing')
 
       if (tracked) {
         chasePlayer(ghost3Index, 'ghost3', pathfinder3Index, playerIndex)
@@ -765,7 +769,7 @@ function init() {
                 // console.log('Pink and Red are chasing again') 
               }, (15000 / round))
               cycleMoveArray.push(finalChase)
-            }, 25000)  
+            }, 20000)  
             cycleMoveArray.push(secondReprieve)
           }, (15000 / round))
           cycleMoveArray.push(secondChase)

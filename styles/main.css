@@ -16,15 +16,22 @@ body {
 }
 
 .bold {
-  font-weight: 900;
+  font-weight: 600;
   /* text-decoration: underline; */
 }
+
+/* button {
+  border-radius: 5px;
+} */
 
 aside {
   background-color: yellow;
   margin: 0 0 0 10px;
   padding: 15px;
   height: 720px;
+  border-radius: 25px;
+  /* background-image: url('../assets/stonetexture.jpg'); */
+  background-image: radial-gradient(yellow, orange);
 }
 
 div.grid {
@@ -33,6 +40,7 @@ div.grid {
   display: flex;
   flex-wrap: wrap;
   background-image: url('../assets/grass2.jpg');
+  border-radius: 25px;
 }
 
 div.grid-item {
@@ -146,6 +154,7 @@ div.startScrn {
   background-color: yellow;
   height: 100%;
   width: 100%;
+  background-image: radial-gradient(yellow, orange);
 }
 
 div.game {
@@ -155,6 +164,7 @@ div.game {
   background-color: aqua;
   height: 100%;
   width: 100%;
+  /* background-image: radial-gradient(aqua 85%, rgb(0, 174, 255)); */
 }
 
 .statusbox {
@@ -215,6 +225,7 @@ div.gameOverScrn {
   background-color: aqua;
   justify-content: center;
   align-items: center;
+  /* background-image: radial-gradient(aqua 70%, rgb(0, 174, 255)); */
 }
 
 div.gameOverWrapper {
@@ -224,6 +235,8 @@ div.gameOverWrapper {
   background-color: yellow;
   width: 350px;
   padding: 15px;
+  border-radius: 25px;
+  background-image: radial-gradient(yellow, orange);
 }
 
 div.scoreboard {
@@ -347,19 +360,23 @@ div.hobbled, div.confused, div.tracked {
   width: 250px;
   background-color: yellow;
   margin: 0 10px 0 0;
+  border-radius: 25px;
+  background-image: url('../assets/stonetexture.jpg');
 }
 
 .profile {
   height: 130px;
   width: 240px;
-  background-color: aqua;
+  background-color: white;
   display: flex;
+  border-radius: 25px;
 }
 
 .portrait {
   height: 130px;
   width: 130px;
   background-color: white;
+  border-radius: 25px;
 }
 
 .portrait > img {
@@ -372,6 +389,7 @@ div.hobbled, div.confused, div.tracked {
   font-size: 12.5px;
   background-color: white;
   padding: 5px;
+  border-radius: 25px;
 }
 
 div.charName > h3 {
