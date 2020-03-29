@@ -1,4 +1,3 @@
-
 This produces a diagonal line of walls:
 if (i % (width - 1) === 0) {
       wallIndices.push(i)
