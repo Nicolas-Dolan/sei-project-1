@@ -1,8 +1,8 @@
 # Goblin Gold
 
-![ga](assets/screenshots/ga.png)
+<!-- ![ga](assets/screenshots/ga.png) -->
 
-## General Assembly: Software Engineering Immersive - Project 1
+## ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) General Assembly: Software Engineering Immersive - Project 1
 
 [Click here to run the application](https://nicolas-dolan.github.io/sei-project-1/)
 
@@ -17,7 +17,7 @@ This was a PacMan-inspired grid-based game, which I built solo in 8 days. I used
 To create a grid-based game using vanilla JavaScript.
 
 ### Timeframe
-1 week
+8 days
 
 ### Technologies used
 JavaScript, HTML5, CSS3, Google Fonts, Git, GitHub.
