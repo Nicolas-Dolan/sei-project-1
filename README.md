@@ -91,19 +91,16 @@ function cycleMoveType() {
       ghostMoveAll()
       firstChase = setTimeout(function(){ 
         ghostChase1()
-        // console.log('Pink is chasing') 
         firstReprieve = setTimeout(function(){ 
           ghostMoveAll()
           console.log('First reprieve') 
           secondChase = setTimeout(function(){ 
             ghostChase2()
-            // console.log('Pink and Red are chasing')
             secondReprieve = setTimeout(function(){ 
               ghostMoveAll()
               console.log('Second reprieve') 
               finalChase = setTimeout(function(){ 
                 ghostChase2()
-                // console.log('Pink and Red are chasing again') 
               }, (15000 / round))
               cycleMoveArray.push(finalChase)
             }, 20000)  
