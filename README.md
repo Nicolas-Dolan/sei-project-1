@@ -57,11 +57,91 @@ I created this grid-based game with vanilla JavaScript, HTML5, and CSS3. I divid
 - Functions
 - Event listeners
 
-First I built the grid and the assets within it. Then I created the functions to allow the user to move their player around the grid. Then I created the enemies and their movement patterns. The different enemies would cycle between chasing the player and simply roaming around the map. The enemies' pathfinding was by far the most complicated aspect of this game. Then I created functions to control what would happen when each enemy type caught the player. I also added in a flee mechanic for when the player picked up the sword and a function for when the player caught a goblin. Finally I worked on the visuals and a leaderboard to record the player's score in localStorage.
+First I built the grid and the assets within it. Rather than manually specifying the placement of every wall (in this case tree), I created functions that would allow me to draw blocks of walls on the grid and automatically ring the perimeter with walls. This helps a lot of with scalability should I wish to create additional maps with different layouts in future.
+
+```javascript
+function drawHorizontalWalls(min, max) {
+      let i = min
+      for (i = min; i <= max; i++) {
+        wallIndices.push(i)
+      }
+    }
+
+    function drawBlock(min, max) {
+      const n = Math.ceil((max + 1) / width) - Math.ceil((min + 1) / width) + 1
+      let i = 0
+      for (i = 0; i < n; i++) {
+        drawHorizontalWalls(min + width * (i), max - width * (n - (i + 1)))
+      }
+    }
+
+    function addWallEdges() {
+      squares.forEach((element, index) => {
+        if (squares[index] < (width * width - 1) && squares[index].classList.contains('wall') && !squares[index + 1].classList.contains('wall')) {
+          squares[index].classList.add('rightEdge')
+        }
+      }) 
+```
+
+
+Then I created the functions to allow the user to move their player around the grid. Then I created the enemies and their movement patterns. *Note: the enemies are referred to as ghosts in the code because I originally developed the game as a PacMan clone before deciding to take it in a different direction.* The different enemies would cycle between chasing the player and simply roaming around the map. 
+
+```javascript
+function cycleMoveType() {
+      ghostMoveAll()
+      firstChase = setTimeout(function(){ 
+        ghostChase1()
+        // console.log('Pink is chasing') 
+        firstReprieve = setTimeout(function(){ 
+          ghostMoveAll()
+          console.log('First reprieve') 
+          secondChase = setTimeout(function(){ 
+            ghostChase2()
+            // console.log('Pink and Red are chasing')
+            secondReprieve = setTimeout(function(){ 
+              ghostMoveAll()
+              console.log('Second reprieve') 
+              finalChase = setTimeout(function(){ 
+                ghostChase2()
+                // console.log('Pink and Red are chasing again') 
+              }, (15000 / round))
+              cycleMoveArray.push(finalChase)
+            }, 20000)  
+            cycleMoveArray.push(secondReprieve)
+          }, (15000 / round))
+          cycleMoveArray.push(secondChase)
+        }, 25000)
+        cycleMoveArray.push(firstReprieve)
+      }, (3000 / round))
+      cycleMoveArray.push(firstChase)
+    }
+```
+
+Then I created functions to control what would happen when each enemy type caught the player. I also added in a flee mechanic for when the player picked up the sword and a function for when the player caught a goblin. Finally I worked on the visuals and a leaderboard to record the player's score in localStorage.
+
+```javascript
+function generateLeaderBd() {
+      const leaderboard = Object.entries(myStorage).map((element) => {
+        return element = [element[0], parseInt(element[1])]
+      }).sort((a,b) => b[1] - (a[1]))
+      console.log('leaderboard', leaderboard)
+      console.log('name', leaderboard[0][0], 'score', leaderboard[0][1])
+      document.querySelector('.scores1 .name').innerHTML = leaderboard[0][0]
+      document.querySelector('.scores1 .userScore').innerHTML = leaderboard[0][1]
+      document.querySelector('.scores2 .name').innerHTML = leaderboard[1][0]
+      document.querySelector('.scores2 .userScore').innerHTML = leaderboard[1][1]
+      document.querySelector('.scores3 .name').innerHTML = leaderboard[2][0]
+      document.querySelector('.scores3 .userScore').innerHTML = leaderboard[2][1]
+      document.querySelector('.scores4 .name').innerHTML = leaderboard[3][0]
+      document.querySelector('.scores4 .userScore').innerHTML = leaderboard[3][1]
+      document.querySelector('.scores5 .name').innerHTML = leaderboard[4][0]
+      document.querySelector('.scores5 .userScore').innerHTML = leaderboard[4][1]
+    }
+```
 
 ## Challenges
 
-As I mentioned, the enemies' pathfinding was very complicated. I deliberately did not want to look up pathfinding solutions as I wanted to challenge myself. In the end I used an O(n<sup>2</sup>) algorthim: essentially using a map function within a map function. Every time the ghost would move it would simulate 40 possible random paths and choose the path with the least number of steps to the player. The algorithm did the job well, turning each enemy into a homing missile but was incrediblly inefficient and would have caused serious performance issues if their had been more enemies on screen at once.
+The enemies' pathfinding was by far the most complicated aspect of the game. I deliberately did not want to look up pathfinding solutions as I wanted to challenge myself. In the end I used an O(n<sup>2</sup>) algorthim: essentially using a map function within a map function. Every time the ghost would move it would simulate 40 possible random paths and choose the path with the least number of steps to the player. The algorithm did the job well, turning each enemy into a homing missile but was incrediblly inefficient and would have caused serious performance issues if their had been more enemies on screen at once.
 
 ## Wins
 
